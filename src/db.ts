@@ -35,5 +35,17 @@ function migrate(db: Database.Database): void {
       occurred_at TEXT NOT NULL,
       details TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS accounts (
+      id TEXT PRIMARY KEY,
+      code TEXT NOT NULL UNIQUE,
+      name TEXT NOT NULL,
+      type TEXT NOT NULL,
+      parent_account_id TEXT,
+      is_active INTEGER NOT NULL DEFAULT 1,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      FOREIGN KEY (parent_account_id) REFERENCES accounts(id)
+    );
   `);
 }

@@ -3,4 +3,5 @@
 tmp/
 node_modules/
 dist/
+data/
 __pycache__/

@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "_how_to_use": "Start with every criterion false — that is the correct starting state, not an unfinished one. false means \"not claimed\": either not done, or done but not yet checked. Set one to true only after you have read the code and confirmed it is genuinely true today.",
+  "totals": {
+    "stories_total": 21,
+    "stories_verified": 0,
+    "criteria_total": 25,
+    "criteria_passed": 5,
+    "points_awarded": 0
+  },
+  "stories": [
+    {
+      "id": "STORY-000",
+      "criteria": [
+        { "text": "Given the Command Center, when it is opened, then every tab is reachable and every card drills down one level.", "passed": true },
+        { "text": "Given sample mode, when any tab is shown, then the sample data is visibly labelled as sample.", "passed": true },
+        { "text": "Given the Command Center, when any tab renders, then .colaberry/plan.json and .colaberry/progress.json are both committed in this repo and every tab reads its content from them at runtime rather than from hard-coded values.", "passed": true },
+        { "text": "Given the Command Center, when any tab is shown, then .colaberry/manifest.json is committed in this repo and every tab shows how old that data is and warns when the age exceeds a week.", "passed": true },
+        { "text": "Trust — no tab shows a number, a connection or a result the project has not actually produced.", "passed": true }
+      ],
+      "verification": { "state": "submitted", "commit": null, "points": 0 }
+    },
+    { "id": "STORY-001", "criteria": [{ "text": "Company profile can be created, configured and saved.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-002", "criteria": [{ "text": "Chart of accounts can be created and maintained.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-003", "criteria": [{ "text": "Manual journal entries can be created following debit and credit rules.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-004", "criteria": [{ "text": "Transactions can be posted to the general ledger.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-005", "criteria": [{ "text": "A trial balance can be generated from posted transactions.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-006", "criteria": [{ "text": "An income statement and balance sheet can be produced.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-018", "criteria": [{ "text": "Unbalanced transactions are rejected before posting.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-019", "criteria": [{ "text": "Every financial transaction is recorded in an audit trail.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-007", "criteria": [{ "text": "Customer and vendor profiles can be created and maintained.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-008", "criteria": [{ "text": "Accounts receivable and payable can be tracked and settled.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-009", "criteria": [{ "text": "Sales and purchasing transactions can be recorded end to end.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-010", "criteria": [{ "text": "Cash and bank transactions can be recorded and reconciled.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-020", "criteria": [{ "text": "Users can be assigned roles that gate what they can access.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-011", "criteria": [{ "text": "Inventory items and stock levels can be tracked.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-012", "criteria": [{ "text": "Budgets and cost centers can be created and tracked.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-013", "criteria": [{ "text": "Branch-level operations can be configured and managed.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-014", "criteria": [{ "text": "Operational and financial dashboards are available.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-015", "criteria": [{ "text": "AI-generated analysis is available and requires approval before altering records.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-016", "criteria": [{ "text": "Multi-branch operations are supported at scale.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-017", "criteria": [{ "text": "Data can be imported and exported via Excel or CSV.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } }
+  ]
+}

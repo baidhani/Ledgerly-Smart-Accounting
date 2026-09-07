@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "project": {
+    "name": "Ledgerly",
+    "descriptor": "Intelligent Accounting and Business Management System — a scalable, modular ERP and intelligent financial management platform."
+  },
+  "schedule": {
+    "build_start": "2026-09-11",
+    "build_end": "2026-10-01",
+    "demo_day": "2026-10-08",
+    "demo_release_key": "r0"
+  },
+  "requirements": [
+    { "id": "REQ-001", "statement": "The system must allow users to create and configure a company profile.", "kind": "FUNC", "priority": "must", "cluster": "core", "fulfilled_by": ["STORY-001"] },
+    { "id": "REQ-002", "statement": "The system must support the creation and maintenance of a chart of accounts.", "kind": "FUNC", "priority": "must", "cluster": "core", "fulfilled_by": ["STORY-002"] },
+    { "id": "REQ-003", "statement": "The system must allow users to create manual journal entries following debit and credit rules.", "kind": "FUNC", "priority": "must", "cluster": "core", "fulfilled_by": ["STORY-003"] },
+    { "id": "REQ-004", "statement": "The system must post transactions to the general ledger.", "kind": "FUNC", "priority": "must", "cluster": "core", "fulfilled_by": ["STORY-004"] },
+    { "id": "REQ-005", "statement": "The system must generate a trial balance from posted transactions.", "kind": "FUNC", "priority": "must", "cluster": "core", "fulfilled_by": ["STORY-005"] },
+    { "id": "REQ-006", "statement": "The system must produce basic financial statements, including an income statement and balance sheet.", "kind": "FUNC", "priority": "must", "cluster": "core", "fulfilled_by": ["STORY-006"] },
+    { "id": "REQ-007", "statement": "The system must ensure all posted transactions follow balanced debit and credit rules.", "kind": "SAFE", "priority": "must", "cluster": "guardrail", "fulfilled_by": ["STORY-018"] },
+    { "id": "REQ-008", "statement": "The system must provide an audit trail for all financial transactions.", "kind": "SAFE", "priority": "must", "cluster": "guardrail", "fulfilled_by": ["STORY-019"] },
+    { "id": "REQ-009", "statement": "The system must validate transactions for balanced entries, valid accounts, and accounting periods before posting.", "kind": "SAFE", "priority": "must", "cluster": "guardrail", "fulfilled_by": ["STORY-018", "STORY-004"] },
+    { "id": "REQ-010", "statement": "The system must support importing and exporting data via Excel or CSV files.", "kind": "FUNC", "priority": "must", "cluster": "operational", "fulfilled_by": ["STORY-017"] },
+    { "id": "REQ-011", "statement": "The system must allow for user roles and permissions management.", "kind": "FUNC", "priority": "must", "cluster": "operational", "fulfilled_by": ["STORY-020"] },
+    { "id": "REQ-012", "statement": "The system must provide dashboards for operational and financial reporting.", "kind": "FUNC", "priority": "should", "cluster": "reporting", "fulfilled_by": ["STORY-014"] },
+    { "id": "REQ-013", "statement": "The system must support customer and vendor management.", "kind": "FUNC", "priority": "should", "cluster": "operational", "fulfilled_by": ["STORY-007"] },
+    { "id": "REQ-014", "statement": "The system must handle accounts receivable and payable.", "kind": "FUNC", "priority": "should", "cluster": "operational", "fulfilled_by": ["STORY-008"] },
+    { "id": "REQ-015", "statement": "The system must manage sales, purchasing, and expenses.", "kind": "FUNC", "priority": "should", "cluster": "operational", "fulfilled_by": ["STORY-009"] },
+    { "id": "REQ-016", "statement": "The system must manage cash and bank transactions.", "kind": "FUNC", "priority": "should", "cluster": "operational", "fulfilled_by": ["STORY-010"] },
+    { "id": "REQ-017", "statement": "The system must support inventory management.", "kind": "FUNC", "priority": "should", "cluster": "business", "fulfilled_by": ["STORY-011"] },
+    { "id": "REQ-018", "statement": "The system must support budgeting and cost centers.", "kind": "FUNC", "priority": "should", "cluster": "business", "fulfilled_by": ["STORY-012"] },
+    { "id": "REQ-019", "statement": "The system must support branch management for multi-branch operations.", "kind": "FUNC", "priority": "should", "cluster": "business", "fulfilled_by": ["STORY-013", "STORY-016"] },
+    { "id": "REQ-020", "statement": "The system must provide AI-assisted financial analysis and insights.", "kind": "FUNC", "priority": "should", "cluster": "ai", "fulfilled_by": ["STORY-015"] },
+    { "id": "REQ-021", "statement": "AI-generated analysis must not alter authoritative accounting records without user approval.", "kind": "SAFE", "priority": "must", "cluster": "guardrail", "fulfilled_by": ["STORY-015"] }
+  ],
+  "stories": [
+    { "id": "STORY-001", "title": "Create and configure a company profile", "narrative": "As a business manager, I want to create and configure a company profile, so that the system reflects my organisation's identity and settings.", "release": "r0", "due_on": "2026-09-11", "due_baseline_on": "2026-09-11", "acceptance_criteria": ["Company profile can be created, configured and saved."] },
+    { "id": "STORY-002", "title": "Create and maintain a chart of accounts", "narrative": "As an accountant, I want to create and maintain a chart of accounts, so that transactions can be classified correctly.", "release": "r0", "due_on": "2026-09-11", "due_baseline_on": "2026-09-11", "acceptance_criteria": ["Chart of accounts can be created and maintained."] },
+    { "id": "STORY-003", "title": "Create manual journal entries", "narrative": "As an accountant, I want to create manual journal entries, so that I can record financial activity following debit and credit rules.", "release": "r0", "due_on": "2026-09-12", "due_baseline_on": "2026-09-12", "acceptance_criteria": ["Manual journal entries can be created following debit and credit rules."] },
+    { "id": "STORY-004", "title": "Post transactions to the general ledger", "narrative": "As an accountant, I want to post transactions to the general ledger, so that the books reflect confirmed activity.", "release": "r0", "due_on": "2026-09-12", "due_baseline_on": "2026-09-12", "acceptance_criteria": ["Transactions can be posted to the general ledger."] },
+    { "id": "STORY-005", "title": "Generate a trial balance", "narrative": "As an accountant, I want to generate a trial balance, so that I can confirm the books are in balance.", "release": "r0", "due_on": "2026-09-13", "due_baseline_on": "2026-09-13", "acceptance_criteria": ["A trial balance can be generated from posted transactions."] },
+    { "id": "STORY-006", "title": "Produce financial statements", "narrative": "As a financial manager, I want to produce financial statements, so that I can report on the organisation's financial position.", "release": "r0", "due_on": "2026-09-13", "due_baseline_on": "2026-09-13", "acceptance_criteria": ["An income statement and balance sheet can be produced."] },
+    { "id": "STORY-018", "title": "Ensure transactions follow balanced debit and credit rules", "narrative": "As an accountant, I want the system to enforce balanced debit and credit rules, so that the ledger can never go out of balance.", "release": "r0", "due_on": "2026-09-14", "due_baseline_on": "2026-09-14", "acceptance_criteria": ["Unbalanced transactions are rejected before posting."] },
+    { "id": "STORY-019", "title": "Provide an audit trail for all financial transactions", "narrative": "As an accountant, I want every financial transaction to leave an audit trail, so that activity can be reviewed and traced.", "release": "r0", "due_on": "2026-09-14", "due_baseline_on": "2026-09-14", "acceptance_criteria": ["Every financial transaction is recorded in an audit trail."] },
+    { "id": "STORY-007", "title": "Manage customer and vendor profiles", "narrative": "As a sales manager, I want to manage customer and vendor profiles, so that I can track who I do business with.", "release": "r1", "due_on": "2026-09-15", "due_baseline_on": "2026-09-15", "acceptance_criteria": ["Customer and vendor profiles can be created and maintained."] },
+    { "id": "STORY-008", "title": "Handle accounts receivable and payable", "narrative": "As a financial manager, I want to handle accounts receivable and payable, so that I can track what is owed and due.", "release": "r1", "due_on": "2026-09-16", "due_baseline_on": "2026-09-16", "acceptance_criteria": ["Accounts receivable and payable can be tracked and settled."] },
+    { "id": "STORY-009", "title": "Manage sales and purchasing workflows", "narrative": "As a sales manager, I want to manage sales and purchasing workflows, so that I can run day-to-day commercial operations.", "release": "r1", "due_on": "2026-09-17", "due_baseline_on": "2026-09-17", "acceptance_criteria": ["Sales and purchasing transactions can be recorded end to end."] },
+    { "id": "STORY-010", "title": "Manage cash and bank transactions", "narrative": "As an accountant, I want to manage cash and bank transactions, so that cash positions stay accurate.", "release": "r1", "due_on": "2026-09-18", "due_baseline_on": "2026-09-18", "acceptance_criteria": ["Cash and bank transactions can be recorded and reconciled."] },
+    { "id": "STORY-020", "title": "Implement user roles and permissions management", "narrative": "As a business manager, I want to manage user roles and permissions, so that access matches responsibility.", "release": "r1", "due_on": "2026-09-18", "due_baseline_on": "2026-09-18", "acceptance_criteria": ["Users can be assigned roles that gate what they can access."] },
+    { "id": "STORY-011", "title": "Manage inventory", "narrative": "As an inventory manager, I want to manage inventory, so that stock levels stay accurate.", "release": "r2", "due_on": "2026-09-20", "due_baseline_on": "2026-09-20", "acceptance_criteria": ["Inventory items and stock levels can be tracked."] },
+    { "id": "STORY-012", "title": "Support budgeting and cost centers", "narrative": "As a financial planner, I want to support budgeting and cost centers, so that spending can be planned and tracked against targets.", "release": "r2", "due_on": "2026-09-21", "due_baseline_on": "2026-09-21", "acceptance_criteria": ["Budgets and cost centers can be created and tracked."] },
+    { "id": "STORY-013", "title": "Manage branch operations", "narrative": "As a business manager, I want to manage branch operations, so that multiple locations can be run from one system.", "release": "r2", "due_on": "2026-09-23", "due_baseline_on": "2026-09-23", "acceptance_criteria": ["Branch-level operations can be configured and managed."] },
+    { "id": "STORY-014", "title": "Provide advanced dashboards and reporting", "narrative": "As a financial manager, I want advanced dashboards and reporting, so that I can see operational and financial performance at a glance.", "release": "r3", "due_on": "2026-09-25", "due_baseline_on": "2026-09-25", "acceptance_criteria": ["Operational and financial dashboards are available."] },
+    { "id": "STORY-015", "title": "Integrate AI for financial insights", "narrative": "As a financial planner, I want AI-assisted financial insights, so that I can spot trends and risks faster, without the AI changing my books on its own.", "release": "r3", "due_on": "2026-09-27", "due_baseline_on": "2026-09-27", "acceptance_criteria": ["AI-generated analysis is available and requires approval before altering records."] },
+    { "id": "STORY-016", "title": "Support multi-branch operations", "narrative": "As a business manager, I want to support multi-branch operations, so that the system scales across locations.", "release": "r4", "due_on": "2026-09-29", "due_baseline_on": "2026-09-29", "acceptance_criteria": ["Multi-branch operations are supported at scale."] },
+    { "id": "STORY-017", "title": "Implement data import/export functionality", "narrative": "As an accountant, I want to import and export data via Excel or CSV, so that I can move data in and out of the system.", "release": "r4", "due_on": "2026-10-01", "due_baseline_on": "2026-10-01", "acceptance_criteria": ["Data can be imported and exported via Excel or CSV."] }
+  ],
+  "releases": [
+    { "key": "r0", "name": "Minimum Viable Accounting Core", "starts_on": "2026-09-11", "ends_on": "2026-09-14", "story_ids": ["STORY-001", "STORY-002", "STORY-003", "STORY-004", "STORY-005", "STORY-006", "STORY-018", "STORY-019"], "is_demo_target": true },
+    { "key": "r1", "name": "Operational Accounting", "starts_on": "2026-09-15", "ends_on": "2026-09-18", "story_ids": ["STORY-007", "STORY-008", "STORY-009", "STORY-010", "STORY-020"], "is_demo_target": false },
+    { "key": "r2", "name": "Business Management", "starts_on": "2026-09-20", "ends_on": "2026-09-23", "story_ids": ["STORY-011", "STORY-012", "STORY-013"], "is_demo_target": false },
+    { "key": "r3", "name": "Advanced Reporting and AI", "starts_on": "2026-09-25", "ends_on": "2026-09-27", "story_ids": ["STORY-014", "STORY-015"], "is_demo_target": false },
+    { "key": "r4", "name": "Scalability and Integration", "starts_on": "2026-09-29", "ends_on": "2026-10-01", "story_ids": ["STORY-016", "STORY-017"], "is_demo_target": false }
+  ],
+  "agents": [],
+  "derived": {
+    "measures": [],
+    "systems": [],
+    "guardrails": [
+      { "id": "REQ-007", "statement": "The system must ensure all posted transactions follow balanced debit and credit rules." },
+      { "id": "REQ-008", "statement": "The system must provide an audit trail for all financial transactions." },
+      { "id": "REQ-009", "statement": "The system must validate transactions for balanced entries, valid accounts, and accounting periods before posting." },
+      { "id": "REQ-021", "statement": "AI-generated analysis must not alter authoritative accounting records without user approval." }
+    ],
+    "roles": ["accountant", "business manager", "sales manager", "financial manager", "inventory manager", "financial planner"],
+    "counts": {
+      "agents_by_autonomy": {}
+    }
+  }
+}

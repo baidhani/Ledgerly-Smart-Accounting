@@ -15,10 +15,12 @@ import { budgetingRouter } from "./routes/budgeting";
 import { branchOperationsRouter } from "./routes/branchOperations";
 import { dashboardsRouter } from "./routes/dashboards";
 import { financialInsightsRouter } from "./routes/financialInsights";
+import { dataImportExportRouter } from "./routes/dataImportExport";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
   app.use(express.json());
+  app.use(express.text({ type: "text/csv" }));
   app.locals.db = db;
 
   app.get("/health", (_req, res) => {
@@ -40,6 +42,7 @@ export function createApp(db: Database.Database): Express {
   app.use(branchOperationsRouter(db));
   app.use(dashboardsRouter(db));
   app.use(financialInsightsRouter(db));
+  app.use(dataImportExportRouter(db));
 
   return app;
 }

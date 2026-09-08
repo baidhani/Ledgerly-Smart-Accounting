@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 16,
+    "stories_verified": 17,
     "stories_submitted": 0,
-    "stories_in_progress": 5,
+    "stories_in_progress": 4,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 50,
-    "points_awarded": 665
+    "criteria_passed": 53,
+    "points_awarded": 703
   },
   "stories": [
     {
@@ -185,7 +185,7 @@
         "verified_at": "2026-09-08T02:07:18.066Z",
         "commit_sha": "b4546312ab1f47554e45c6ac424e333ee14d954d",
         "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/b4546312ab1f47554e45c6ac424e333ee14d954d",
-        "commit_at": "2026-09-08T02:06:26Z",
+        "commit_at": "2026-09-08T02:07:38Z",
         "points_awarded": 38,
         "outstanding": []
       }
@@ -550,19 +550,15 @@
       "notes": "branches table plus POST /branches (create, minimal on-ramp since no prior story creates one) and PATCH /branches/:id (the actual update the criteria test). Update validation checks against live state (branch exists, at least one field supplied) not just body shape. Verified live via HTTP against a running server plus direct SQLite queries, in addition to the automated test suite. Commit ee650c2.",
       "updated_at": "2026-09-08T17:10:00Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a branch update, when I enter valid details, then the system updates branch records.",
-          "Given an invalid branch update, when I try to save, then the system rejects the update.",
-          "Trust: All branch changes are logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T17:05:49.275Z",
+        "commit_sha": "ee650c2730e3e2b61d198124f4e21f1fc0206f97",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/ee650c2730e3e2b61d198124f4e21f1fc0206f97",
+        "commit_at": "2026-09-08T17:04:59Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

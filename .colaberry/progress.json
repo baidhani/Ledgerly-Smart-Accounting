@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 6,
+    "stories_verified": 7,
     "stories_submitted": 0,
-    "stories_in_progress": 15,
+    "stories_in_progress": 14,
     "stories_not_started": 0,
     "criteria_total": 65,
     "criteria_passed": 23,
-    "points_awarded": 285
+    "points_awarded": 323
   },
   "stories": [
     {
@@ -242,24 +242,26 @@
           "passed": true
         }
       ],
-      "files_touched": ["src/financialStatements.ts", "src/app.ts", "tests/financialStatements.test.ts"],
-      "tests_added": ["tests/financialStatements.test.ts"],
+      "files_touched": [
+        "src/financialStatements.ts",
+        "src/app.ts",
+        "tests/financialStatements.test.ts"
+      ],
+      "tests_added": [
+        "tests/financialStatements.test.ts"
+      ],
       "notes": "GET /financial-statements aggregates general_ledger by account type into an income statement and balance sheet; rejects with specific reasons when no company profile or no accounts exist; folds current-period net income into equity so Assets = Liabilities + Equity + Net Income holds.",
       "updated_at": "2026-09-08T04:30:32Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a request for financial statements, when I generate them, then the system produces an income statement and balance sheet.",
-          "Given incomplete data, when I try to generate financial statements, then the system alerts me to missing information.",
-          "Trust: Financial statement generation is logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T04:34:28.092Z",
+        "commit_sha": "a9a752e7711ef8b7737439ddcdb75da000b94fe0",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/a9a752e7711ef8b7737439ddcdb75da000b94fe0",
+        "commit_at": "2026-09-08T04:30:03Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

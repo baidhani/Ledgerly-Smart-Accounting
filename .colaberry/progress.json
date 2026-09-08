@@ -8,7 +8,7 @@
     "stories_in_progress": 10,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 35,
+    "criteria_passed": 38,
     "points_awarded": 475
   },
   "stories": [
@@ -355,20 +355,20 @@
       "criteria": [
         {
           "text": "Given a sales order, when I process it, then the system updates inventory and sales records.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given an invalid sales order, when I try to process, then the system rejects the order.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All sales and purchasing transactions are logged in the audit trail.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
+      "files_touched": ["src/db.ts", "src/salesPurchasing.ts", "src/routes/salesPurchasing.ts", "src/app.ts", "tests/salesPurchasing.test.ts"],
+      "tests_added": ["tests/salesPurchasing.test.ts"],
+      "notes": "Resolved a genuine conflict in the brief: criterion 1 requires updating inventory, but STORY-011 (inventory management) is explicitly out of scope for this story. Built only the minimal inventory_items surface (quantity_on_hand, updated as a side effect of order processing) needed for this story's own criteria, with no CRUD/management endpoints — that stays STORY-011's job. Added a bare POST /inventory-items mid-build since nothing could otherwise create one through the API. No auto-posting to the general ledger on sales/purchases (deliberate, unlike STORY-008's AR/AP), since nothing in these criteria asks for it.",
       "updated_at": null,
       "verification": {
         "state": "in_progress",

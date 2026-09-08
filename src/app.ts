@@ -5,6 +5,7 @@ import { createAccount, validateAccountInput, DuplicateAccountError } from "./ac
 import { createJournalEntry, validateJournalEntryInput } from "./journalEntries";
 import { postJournalEntry, JournalEntryNotFoundError, UnpostableTransactionError } from "./generalLedger";
 import { generateTrialBalance } from "./trialBalance";
+import { generateFinancialStatements, IncompleteDataError } from "./financialStatements";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -151,6 +152,25 @@ export function createApp(db: Database.Database): Express {
         outcome: "failure",
       }));
       res.status(500).json({ error: "Could not generate the trial balance. Please try again." });
+    }
+  });
+
+  app.get("/financial-statements", (_req, res) => {
+    try {
+      const statements = generateFinancialStatements(db);
+      res.status(200).json(statements);
+    } catch (err) {
+      if (err instanceof IncompleteDataError) {
+        res.status(400).json({ error: "Cannot generate financial statements: data is incomplete.", reasons: err.reasons });
+        return;
+      }
+      console.error(JSON.stringify({
+        level: "error",
+        event: "financial_statements_generation_failed",
+        error_class: err instanceof Error ? err.constructor.name : "UnknownError",
+        outcome: "failure",
+      }));
+      res.status(500).json({ error: "Could not generate financial statements. Please try again." });
     }
   });
 

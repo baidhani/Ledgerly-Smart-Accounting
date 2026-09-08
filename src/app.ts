@@ -11,6 +11,7 @@ import { salesPurchasingRouter } from "./routes/salesPurchasing";
 import { bankTransactionsRouter } from "./routes/bankTransactions";
 import { rolesPermissionsRouter } from "./routes/rolesPermissions";
 import { inventoryManagementRouter } from "./routes/inventoryManagement";
+import { budgetingRouter } from "./routes/budgeting";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -32,6 +33,7 @@ export function createApp(db: Database.Database): Express {
   app.use(bankTransactionsRouter(db));
   app.use(rolesPermissionsRouter(db));
   app.use(inventoryManagementRouter(db));
+  app.use(budgetingRouter(db));
 
   return app;
 }

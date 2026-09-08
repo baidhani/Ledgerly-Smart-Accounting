@@ -261,6 +261,31 @@ function migrate(db: Database.Database): void {
       FOREIGN KEY (inventory_item_id) REFERENCES inventory_items(id),
       CHECK (quantity_change != 0)
     );
+
+    CREATE TABLE IF NOT EXISTS cost_centers (
+      id TEXT PRIMARY KEY,
+      code TEXT NOT NULL UNIQUE,
+      name TEXT NOT NULL,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+
+    -- A budget allocation: how much a cost center may spend against a given
+    -- account in a given period. (cost_center_id, account_id, period) is
+    -- the natural key — re-submitting the same allocation is a duplicate,
+    -- not a silent second budget for the same thing.
+    CREATE TABLE IF NOT EXISTS budgets (
+      id TEXT PRIMARY KEY,
+      cost_center_id TEXT NOT NULL,
+      account_id TEXT NOT NULL,
+      period TEXT NOT NULL,
+      amount_cents INTEGER NOT NULL,
+      created_at TEXT NOT NULL,
+      FOREIGN KEY (cost_center_id) REFERENCES cost_centers(id),
+      FOREIGN KEY (account_id) REFERENCES accounts(id),
+      CHECK (amount_cents > 0),
+      UNIQUE (cost_center_id, account_id, period)
+    );
   `);
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");

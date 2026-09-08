@@ -13,6 +13,7 @@ import { rolesPermissionsRouter } from "./routes/rolesPermissions";
 import { inventoryManagementRouter } from "./routes/inventoryManagement";
 import { budgetingRouter } from "./routes/budgeting";
 import { branchOperationsRouter } from "./routes/branchOperations";
+import { dashboardsRouter } from "./routes/dashboards";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -36,6 +37,7 @@ export function createApp(db: Database.Database): Express {
   app.use(inventoryManagementRouter(db));
   app.use(budgetingRouter(db));
   app.use(branchOperationsRouter(db));
+  app.use(dashboardsRouter(db));
 
   return app;
 }

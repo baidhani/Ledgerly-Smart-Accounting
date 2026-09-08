@@ -3,6 +3,7 @@ import type Database from "better-sqlite3";
 import { createCompanyProfile, validateCompanyProfileInput } from "./companies";
 import { createAccount, validateAccountInput, DuplicateAccountError } from "./accounts";
 import { createJournalEntry, validateJournalEntryInput } from "./journalEntries";
+import { postJournalEntry, JournalEntryNotFoundError, UnpostableTransactionError } from "./generalLedger";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -111,6 +112,29 @@ export function createApp(db: Database.Database): Express {
         outcome: "failure",
       }));
       res.status(500).json({ error: "Could not save the journal entry. Please try again." });
+    }
+  });
+
+  app.post("/journal-entries/:id/post", (req, res) => {
+    try {
+      const posted = postJournalEntry(db, req.params.id);
+      res.status(200).json(posted);
+    } catch (err) {
+      if (err instanceof JournalEntryNotFoundError) {
+        res.status(404).json({ error: err.message });
+        return;
+      }
+      if (err instanceof UnpostableTransactionError) {
+        res.status(400).json({ error: "Transaction is invalid and cannot be posted.", reasons: err.reasons });
+        return;
+      }
+      console.error(JSON.stringify({
+        level: "error",
+        event: "journal_entry_post_failed",
+        error_class: err instanceof Error ? err.constructor.name : "UnknownError",
+        outcome: "failure",
+      }));
+      res.status(500).json({ error: "Could not post the transaction. Please try again." });
     }
   });
 

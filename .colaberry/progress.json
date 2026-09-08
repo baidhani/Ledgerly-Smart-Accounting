@@ -4,8 +4,8 @@
   "totals": {
     "stories_total": 21,
     "stories_verified": 0,
-    "criteria_total": 33,
-    "criteria_passed": 17,
+    "criteria_total": 35,
+    "criteria_passed": 20,
     "points_awarded": 0
   },
   "stories": [
@@ -40,7 +40,11 @@
       { "text": "Given an invalid transaction, when I try to post, then the system rejects the posting.", "passed": true },
       { "text": "Trust: All postings to the general ledger are logged in the audit trail.", "passed": true }
     ], "verification": { "state": "submitted", "commit": "b454631", "points": 0 } },
-    { "id": "STORY-005", "criteria": [{ "text": "A trial balance can be generated from posted transactions.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-005", "criteria": [
+      { "text": "Given posted transactions, when I generate a trial balance, then the system displays the balance.", "passed": true },
+      { "text": "Given no transactions, when I generate a trial balance, then the system shows a zero balance.", "passed": true },
+      { "text": "Trust: Trial balance generation is logged in the audit trail.", "passed": true }
+    ], "verification": { "state": "submitted", "commit": "cdc9b5d", "points": 0 } },
     { "id": "STORY-006", "criteria": [{ "text": "An income statement and balance sheet can be produced.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
     { "id": "STORY-018", "criteria": [{ "text": "Unbalanced transactions are rejected before posting.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
     { "id": "STORY-019", "criteria": [{ "text": "Every financial transaction is recorded in an audit trail.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },

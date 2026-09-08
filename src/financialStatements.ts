@@ -60,7 +60,7 @@ function sumNet(lines: StatementLine[]): number {
  * exist first — those are real prerequisites, not just "no activity yet"
  * (which produces a valid, all-zero statement instead of this error).
  */
-export function generateFinancialStatements(db: Database.Database): FinancialStatements {
+export function generateFinancialStatements(db: Database.Database, userId: string): FinancialStatements {
   const reasons: string[] = [];
 
   const company = db.prepare("SELECT id FROM companies LIMIT 1").get();
@@ -122,13 +122,14 @@ export function generateFinancialStatements(db: Database.Database): FinancialSta
 
   db.prepare(
     `
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
-    VALUES (@id, 'financial_statements', @entity_id, 'financial_statements_generated', @occurred_at, @details)
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
+    VALUES (@id, 'financial_statements', @entity_id, 'financial_statements_generated', @occurred_at, @user_id, @details)
   `
   ).run({
     id: randomUUID(),
     entity_id: randomUUID(),
     occurred_at: generatedAt,
+    user_id: userId,
     details: JSON.stringify({
       net_income_cents,
       total_assets_cents,

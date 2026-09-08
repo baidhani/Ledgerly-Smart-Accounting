@@ -33,6 +33,7 @@ function migrate(db: Database.Database): void {
       entity_id TEXT NOT NULL,
       action TEXT NOT NULL,
       occurred_at TEXT NOT NULL,
+      user_id TEXT,
       details TEXT
     );
 
@@ -86,6 +87,7 @@ function migrate(db: Database.Database): void {
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");
   addColumnIfMissing(db, "journal_entries", "posted_at", "TEXT");
+  addColumnIfMissing(db, "audit_log", "user_id", "TEXT");
 }
 
 function addColumnIfMissing(db: Database.Database, table: string, column: string, definition: string): void {

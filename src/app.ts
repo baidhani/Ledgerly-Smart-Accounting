@@ -6,6 +6,8 @@ import { createJournalEntry, validateJournalEntryInput } from "./journalEntries"
 import { postJournalEntry, JournalEntryNotFoundError, UnpostableTransactionError } from "./generalLedger";
 import { generateTrialBalance } from "./trialBalance";
 import { generateFinancialStatements, IncompleteDataError } from "./financialStatements";
+import { getUserId } from "./actor";
+import { getAuditTrail } from "./auditTrail";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -35,7 +37,7 @@ export function createApp(db: Database.Database): Express {
         legal_entity_type: body.legal_entity_type,
         fiscal_year_start: body.fiscal_year_start,
         base_currency: body.base_currency,
-      });
+      }, getUserId(req));
       res.status(201).json(company);
     } catch (err) {
       console.error(JSON.stringify({
@@ -68,7 +70,7 @@ export function createApp(db: Database.Database): Express {
         name: body.name,
         type: body.type,
         parent_account_id: body.parent_account_id ?? null,
-      });
+      }, getUserId(req));
       res.status(201).json(account);
     } catch (err) {
       if (err instanceof DuplicateAccountError) {
@@ -104,7 +106,7 @@ export function createApp(db: Database.Database): Express {
         entry_date: body.entry_date,
         memo: body.memo ?? null,
         lines: body.lines,
-      });
+      }, getUserId(req));
       res.status(201).json(entry);
     } catch (err) {
       console.error(JSON.stringify({
@@ -119,7 +121,7 @@ export function createApp(db: Database.Database): Express {
 
   app.post("/journal-entries/:id/post", (req, res) => {
     try {
-      const posted = postJournalEntry(db, req.params.id);
+      const posted = postJournalEntry(db, req.params.id, getUserId(req));
       res.status(200).json(posted);
     } catch (err) {
       if (err instanceof JournalEntryNotFoundError) {
@@ -140,9 +142,9 @@ export function createApp(db: Database.Database): Express {
     }
   });
 
-  app.get("/trial-balance", (_req, res) => {
+  app.get("/trial-balance", (req, res) => {
     try {
-      const trialBalance = generateTrialBalance(db);
+      const trialBalance = generateTrialBalance(db, getUserId(req));
       res.status(200).json(trialBalance);
     } catch (err) {
       console.error(JSON.stringify({
@@ -155,9 +157,9 @@ export function createApp(db: Database.Database): Express {
     }
   });
 
-  app.get("/financial-statements", (_req, res) => {
+  app.get("/financial-statements", (req, res) => {
     try {
-      const statements = generateFinancialStatements(db);
+      const statements = generateFinancialStatements(db, getUserId(req));
       res.status(200).json(statements);
     } catch (err) {
       if (err instanceof IncompleteDataError) {
@@ -171,6 +173,24 @@ export function createApp(db: Database.Database): Express {
         outcome: "failure",
       }));
       res.status(500).json({ error: "Could not generate financial statements. Please try again." });
+    }
+  });
+
+  app.get("/audit-log", (req, res) => {
+    try {
+      const entries = getAuditTrail(db, {
+        entity_type: typeof req.query.entity_type === "string" ? req.query.entity_type : undefined,
+        entity_id: typeof req.query.entity_id === "string" ? req.query.entity_id : undefined,
+      });
+      res.status(200).json({ entries });
+    } catch (err) {
+      console.error(JSON.stringify({
+        level: "error",
+        event: "audit_trail_read_failed",
+        error_class: err instanceof Error ? err.constructor.name : "UnknownError",
+        outcome: "failure",
+      }));
+      res.status(500).json({ error: "Could not read the audit trail. Please try again." });
     }
   });
 

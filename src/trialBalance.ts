@@ -22,7 +22,7 @@ export interface TrialBalance {
  * the audit trail. With no posted transactions yet, returns an empty
  * account list and zero totals rather than an error.
  */
-export function generateTrialBalance(db: Database.Database): TrialBalance {
+export function generateTrialBalance(db: Database.Database, userId: string): TrialBalance {
   const rows = db
     .prepare(
       `
@@ -49,13 +49,14 @@ export function generateTrialBalance(db: Database.Database): TrialBalance {
 
   db.prepare(
     `
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
-    VALUES (@id, 'trial_balance', @entity_id, 'trial_balance_generated', @occurred_at, @details)
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
+    VALUES (@id, 'trial_balance', @entity_id, 'trial_balance_generated', @occurred_at, @user_id, @details)
   `
   ).run({
     id: randomUUID(),
     entity_id: randomUUID(),
     occurred_at: generatedAt,
+    user_id: userId,
     details: JSON.stringify({
       account_count: rows.length,
       debit_cents: totals.debit_cents,

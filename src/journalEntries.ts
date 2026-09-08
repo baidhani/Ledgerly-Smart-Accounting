@@ -115,7 +115,7 @@ export function validateJournalEntryInput(db: Database.Database, input: Record<s
   return { valid: missing.length === 0 && invalid.length === 0, missing, invalid };
 }
 
-export function createJournalEntry(db: Database.Database, input: JournalEntryInput): JournalEntry {
+export function createJournalEntry(db: Database.Database, input: JournalEntryInput, userId: string): JournalEntry {
   const now = new Date().toISOString();
   const entryId = randomUUID();
 
@@ -135,8 +135,8 @@ export function createJournalEntry(db: Database.Database, input: JournalEntryInp
     VALUES (@id, @journal_entry_id, @account_id, @debit_cents, @credit_cents)
   `);
   const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
-    VALUES (@id, 'journal_entry', @entity_id, 'journal_entry_created', @occurred_at, @details)
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
+    VALUES (@id, 'journal_entry', @entity_id, 'journal_entry_created', @occurred_at, @user_id, @details)
   `);
 
   const tx = db.transaction(() => {
@@ -148,6 +148,7 @@ export function createJournalEntry(db: Database.Database, input: JournalEntryInp
       id: randomUUID(),
       entity_id: entryId,
       occurred_at: now,
+      user_id: userId,
       details: JSON.stringify({ entry_date: input.entry_date, line_count: lines.length }),
     });
   });

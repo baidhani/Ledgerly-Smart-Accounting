@@ -68,7 +68,7 @@ export class DuplicateAccountError extends Error {
   }
 }
 
-export function createAccount(db: Database.Database, input: AccountInput): Account {
+export function createAccount(db: Database.Database, input: AccountInput, userId: string): Account {
   const now = new Date().toISOString();
   const account: Account = {
     id: randomUUID(),
@@ -86,8 +86,8 @@ export function createAccount(db: Database.Database, input: AccountInput): Accou
     VALUES (@id, @code, @name, @type, @parent_account_id, @is_active, @created_at, @updated_at)
   `);
   const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
-    VALUES (@id, 'account', @entity_id, 'account_created', @occurred_at, @details)
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
+    VALUES (@id, 'account', @entity_id, 'account_created', @occurred_at, @user_id, @details)
   `);
 
   const tx = db.transaction(() => {
@@ -96,6 +96,7 @@ export function createAccount(db: Database.Database, input: AccountInput): Accou
       id: randomUUID(),
       entity_id: account.id,
       occurred_at: now,
+      user_id: userId,
       details: JSON.stringify({ code: account.code, name: account.name }),
     });
   });

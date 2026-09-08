@@ -64,7 +64,7 @@ export function validateCompanyProfileInput(input: Record<string, unknown>): Val
   return { valid: missing.length === 0 && invalid.length === 0, missing, invalid };
 }
 
-export function createCompanyProfile(db: Database.Database, input: CompanyProfileInput): CompanyProfile {
+export function createCompanyProfile(db: Database.Database, input: CompanyProfileInput, userId: string): CompanyProfile {
   const now = new Date().toISOString();
   const company: CompanyProfile = {
     id: randomUUID(),
@@ -78,8 +78,8 @@ export function createCompanyProfile(db: Database.Database, input: CompanyProfil
     VALUES (@id, @name, @legal_entity_type, @fiscal_year_start, @base_currency, @created_at, @updated_at)
   `);
   const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
-    VALUES (@id, 'company', @entity_id, 'company_profile_created', @occurred_at, @details)
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
+    VALUES (@id, 'company', @entity_id, 'company_profile_created', @occurred_at, @user_id, @details)
   `);
 
   const tx = db.transaction(() => {
@@ -88,6 +88,7 @@ export function createCompanyProfile(db: Database.Database, input: CompanyProfil
       id: randomUUID(),
       entity_id: company.id,
       occurred_at: now,
+      user_id: userId,
       details: JSON.stringify({ name: company.name }),
     });
   });

@@ -53,16 +53,17 @@ interface JournalLineRow {
   credit_cents: number;
 }
 
-function logRejectedAttempt(db: Database.Database, journalEntryId: string, reasons: string[]): void {
+function logRejectedAttempt(db: Database.Database, journalEntryId: string, reasons: string[], userId: string): void {
   db.prepare(
     `
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
-    VALUES (@id, 'journal_entry', @entity_id, 'transaction_post_rejected', @occurred_at, @details)
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
+    VALUES (@id, 'journal_entry', @entity_id, 'transaction_post_rejected', @occurred_at, @user_id, @details)
   `
   ).run({
     id: randomUUID(),
     entity_id: journalEntryId,
     occurred_at: new Date().toISOString(),
+    user_id: userId,
     details: JSON.stringify({ reasons }),
   });
 }
@@ -115,13 +116,13 @@ function findPostingErrors(db: Database.Database, lines: JournalLineRow[]): stri
  * already-posted entry returns the same result again instead of erroring or
  * writing a second time.
  */
-export function postJournalEntry(db: Database.Database, journalEntryId: string): PostedJournalEntry {
+export function postJournalEntry(db: Database.Database, journalEntryId: string, userId: string): PostedJournalEntry {
   const entry = db.prepare("SELECT * FROM journal_entries WHERE id = ?").get(journalEntryId) as
     | JournalEntryRow
     | undefined;
 
   if (!entry) {
-    logRejectedAttempt(db, journalEntryId, [`no journal entry with id "${journalEntryId}" exists`]);
+    logRejectedAttempt(db, journalEntryId, [`no journal entry with id "${journalEntryId}" exists`], userId);
     throw new JournalEntryNotFoundError(journalEntryId);
   }
 
@@ -135,7 +136,7 @@ export function postJournalEntry(db: Database.Database, journalEntryId: string):
 
   const errors = findPostingErrors(db, lines);
   if (errors.length > 0) {
-    logRejectedAttempt(db, journalEntryId, errors);
+    logRejectedAttempt(db, journalEntryId, errors, userId);
     throw new UnpostableTransactionError(errors);
   }
 
@@ -158,8 +159,8 @@ export function postJournalEntry(db: Database.Database, journalEntryId: string):
     UPDATE journal_entries SET status = 'posted', posted_at = @posted_at WHERE id = @id
   `);
   const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
-    VALUES (@id, 'journal_entry', @entity_id, 'transaction_posted', @occurred_at, @details)
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
+    VALUES (@id, 'journal_entry', @entity_id, 'transaction_posted', @occurred_at, @user_id, @details)
   `);
 
   const tx = db.transaction(() => {
@@ -171,6 +172,7 @@ export function postJournalEntry(db: Database.Database, journalEntryId: string):
       id: randomUUID(),
       entity_id: journalEntryId,
       occurred_at: now,
+      user_id: userId,
       details: JSON.stringify({ line_count: ledgerLines.length }),
     });
   });

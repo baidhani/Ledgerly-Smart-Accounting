@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 7,
+    "stories_verified": 8,
     "stories_submitted": 0,
-    "stories_in_progress": 14,
+    "stories_in_progress": 13,
     "stories_not_started": 0,
     "criteria_total": 65,
     "criteria_passed": 26,
-    "points_awarded": 323
+    "points_awarded": 361
   },
   "stories": [
     {
@@ -700,24 +700,25 @@
           "passed": true
         }
       ],
-      "files_touched": ["src/generalLedger.ts", "tests/generalLedger.test.ts"],
-      "tests_added": ["tests/generalLedger.test.ts"],
+      "files_touched": [
+        "src/generalLedger.ts",
+        "tests/generalLedger.test.ts"
+      ],
+      "tests_added": [
+        "tests/generalLedger.test.ts"
+      ],
       "notes": "Balanced/unbalanced posting validation already existed from STORY-004. Added logRejectedAttempt() so a rejected posting attempt (not-found or unbalanced) logs a 'transaction_post_rejected' audit entry, closing the gap where only successes were logged. Accounting-period validation from REQ-009's failure-paths list is explicitly out of scope: no acceptance criterion tests it, and no period concept exists in this codebase yet — confirmed with the user rather than assumed.",
       "updated_at": null,
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a transaction with balanced debit and credit entries, when I post the transaction, then it should be accepted.",
-          "Given a transaction with unbalanced debit and credit entries, when I attempt to post the transaction, then it should be rejected with an error message.",
-          "Trust: All transaction attempts must be logged with their success or failure status."
-        ]
+        "verified_at": "2026-09-08T04:53:55.777Z",
+        "commit_sha": "4daa2f5c4cd18bc893907115c30886e824711ea2",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/4daa2f5c4cd18bc893907115c30886e824711ea2",
+        "commit_at": "2026-09-08T04:52:42Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

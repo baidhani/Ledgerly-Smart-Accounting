@@ -525,21 +525,30 @@
       "criteria": [
         {
           "text": "Given a branch update, when I enter valid details, then the system updates branch records.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given an invalid branch update, when I try to save, then the system rejects the update.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All branch changes are logged in the audit trail.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "src/db.ts",
+        "src/branchOperations.ts",
+        "src/routes/branchOperations.ts",
+        "src/app.ts",
+        "tests/branchOperations.test.ts",
+        ".colaberry/plan.json"
+      ],
+      "tests_added": [
+        "tests/branchOperations.test.ts"
+      ],
+      "notes": "branches table plus POST /branches (create, minimal on-ramp since no prior story creates one) and PATCH /branches/:id (the actual update the criteria test). Update validation checks against live state (branch exists, at least one field supplied) not just body shape. Verified live via HTTP against a running server plus direct SQLite queries, in addition to the automated test suite. Commit ee650c2.",
+      "updated_at": "2026-09-08T17:10:00Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

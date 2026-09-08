@@ -5,6 +5,7 @@ import { accountsRouter } from "./routes/accounts";
 import { ledgerRouter } from "./routes/ledger";
 import { reportingRouter } from "./routes/reporting";
 import { auditRouter } from "./routes/audit";
+import { businessPartnersRouter } from "./routes/businessPartners";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -20,6 +21,7 @@ export function createApp(db: Database.Database): Express {
   app.use(ledgerRouter(db));
   app.use(reportingRouter(db));
   app.use(auditRouter(db));
+  app.use(businessPartnersRouter(db));
 
   return app;
 }

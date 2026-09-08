@@ -83,6 +83,17 @@ function migrate(db: Database.Database): void {
       FOREIGN KEY (journal_line_id) REFERENCES journal_lines(id),
       FOREIGN KEY (account_id) REFERENCES accounts(id)
     );
+
+    CREATE TABLE IF NOT EXISTS business_partners (
+      id TEXT PRIMARY KEY,
+      type TEXT NOT NULL,
+      name TEXT NOT NULL,
+      email TEXT,
+      phone TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      UNIQUE (type, name)
+    );
   `);
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");

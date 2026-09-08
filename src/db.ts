@@ -247,6 +247,20 @@ function migrate(db: Database.Database): void {
       occurred_at TEXT NOT NULL,
       details TEXT
     );
+
+    -- Direct inventory adjustments (count corrections, write-offs) — the
+    -- real management surface STORY-009 deliberately deferred, distinct
+    -- from quantity_on_hand changing as a side effect of order processing.
+    CREATE TABLE IF NOT EXISTS stock_updates (
+      id TEXT PRIMARY KEY,
+      reference TEXT NOT NULL UNIQUE,
+      inventory_item_id TEXT NOT NULL,
+      quantity_change INTEGER NOT NULL,
+      reason TEXT,
+      created_at TEXT NOT NULL,
+      FOREIGN KEY (inventory_item_id) REFERENCES inventory_items(id),
+      CHECK (quantity_change != 0)
+    );
   `);
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");

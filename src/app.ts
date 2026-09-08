@@ -10,6 +10,7 @@ import { receivablesPayablesRouter } from "./routes/receivablesPayables";
 import { salesPurchasingRouter } from "./routes/salesPurchasing";
 import { bankTransactionsRouter } from "./routes/bankTransactions";
 import { rolesPermissionsRouter } from "./routes/rolesPermissions";
+import { inventoryManagementRouter } from "./routes/inventoryManagement";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -30,6 +31,7 @@ export function createApp(db: Database.Database): Express {
   app.use(salesPurchasingRouter(db));
   app.use(bankTransactionsRouter(db));
   app.use(rolesPermissionsRouter(db));
+  app.use(inventoryManagementRouter(db));
 
   return app;
 }

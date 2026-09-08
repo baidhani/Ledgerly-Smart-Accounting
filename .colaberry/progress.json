@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 12,
+    "stories_verified": 13,
     "stories_submitted": 0,
-    "stories_in_progress": 9,
+    "stories_in_progress": 8,
     "stories_not_started": 0,
     "criteria_total": 65,
     "criteria_passed": 41,
-    "points_awarded": 513
+    "points_awarded": 551
   },
   "stories": [
     {
@@ -83,7 +83,7 @@
         "verified_at": "2026-09-07T20:52:14.321Z",
         "commit_sha": "eaf7dac209edfb66c547929275fccdb805fe9845",
         "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/eaf7dac209edfb66c547929275fccdb805fe9845",
-        "commit_at": "2026-09-07T16:04:07Z",
+        "commit_at": "2026-09-07T16:52:55Z",
         "points_awarded": 38,
         "outstanding": []
       }
@@ -408,24 +408,28 @@
           "passed": true
         }
       ],
-      "files_touched": ["src/db.ts", "src/bankTransactions.ts", "src/routes/bankTransactions.ts", "src/app.ts", "tests/bankTransactions.test.ts"],
-      "tests_added": ["tests/bankTransactions.test.ts"],
+      "files_touched": [
+        "src/db.ts",
+        "src/bankTransactions.ts",
+        "src/routes/bankTransactions.ts",
+        "src/app.ts",
+        "tests/bankTransactions.test.ts"
+      ],
+      "tests_added": [
+        "tests/bankTransactions.test.ts"
+      ],
       "notes": "Reconciling creates and posts a real, balanced journal entry through the existing pipeline (deposit debits cash/credits contra; withdrawal reverses it) — same GL-integration pattern as STORY-008's AR/AP payments, verified via GET /trial-balance. cash_account_id/contra_account_id fixed at creation, re-validated at reconcile time independent of creation checks (same idiom as postJournalEntry). Idempotent on re-reconcile; duplicate reference detection via UNIQUE constraint.",
       "updated_at": null,
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a bank transaction, when I reconcile it, then the system updates cash records.",
-          "Given a reconciliation error, when I try to process, then the system alerts me to the issue.",
-          "Trust: All cash and bank transactions are logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T14:38:27.569Z",
+        "commit_sha": "802885c57c5db4416eb9fa5dd5e1753419a34658",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/802885c57c5db4416eb9fa5dd5e1753419a34658",
+        "commit_at": "2026-09-08T14:37:31Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 17,
+    "stories_verified": 18,
     "stories_submitted": 0,
-    "stories_in_progress": 4,
+    "stories_in_progress": 3,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 53,
-    "points_awarded": 703
+    "criteria_passed": 56,
+    "points_awarded": 741
   },
   "stories": [
     {
@@ -219,7 +219,7 @@
         "verified_at": "2026-09-08T04:16:38.390Z",
         "commit_sha": "cdc9b5d5aa0d0c76f94a02235e0304bda4e40d4b",
         "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/cdc9b5d5aa0d0c76f94a02235e0304bda4e40d4b",
-        "commit_at": "2026-09-08T04:15:40Z",
+        "commit_at": "2026-09-08T04:17:16Z",
         "points_awarded": 38,
         "outstanding": []
       }
@@ -593,19 +593,15 @@
       "notes": "dashboards table stores only widget config; GET /dashboards/:id/render recomputes every widget live from current tables on each call (trial_balance, budget_summary, branch_summary), so real-time data is genuinely real-time. Rendering a nonexistent dashboard returns a 404 alert instead of crashing. Verified live via HTTP against a running server plus direct SQLite queries, in addition to the automated test suite. Commit ddb97e9.",
       "updated_at": "2026-09-08T17:25:00Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a dashboard request, when I configure it, then the system displays the dashboard with real-time data.",
-          "Given a reporting error, when I try to generate a report, then the system alerts me to the issue.",
-          "Trust: All dashboard configurations and report generations are logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T17:20:24.873Z",
+        "commit_sha": "ddb97e9931de30075167c9ef1935f56a1df12803",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/ddb97e9931de30075167c9ef1935f56a1df12803",
+        "commit_at": "2026-09-08T17:19:36Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

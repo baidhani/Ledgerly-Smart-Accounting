@@ -14,6 +14,18 @@ matches criteria **by exact text**, so a correct implementation against
 mismatched criteria text still shows as incomplete. This checklist exists so
 that mistake doesn't repeat.
 
+**Update, once the portal has provisioned this repo (first real sync):** its
+own `.colaberry/progress.json` generates each story's criteria independently
+(from its own source, not from this repo's `plan.json`) — confirmed on
+STORY-018, whose portal-provisioned entry already carried the exact right
+criteria text with no drift, even though `plan.json` still had a stale
+placeholder. So after the first sync, fixing `plan.json` is for the Command
+Center's own consistency, not for portal verification — but keep doing it
+anyway, and keep doing step 2 below, since a story worked on *before* the
+first sync (or in a repo the portal never gets push access to) still depends
+on `plan.json` being right, and there's no cheap way to tell which situation
+you're in from inside a single story.
+
 ## Before you write any code
 
 1. Read the story's requirement, acceptance criteria, and the guardrails

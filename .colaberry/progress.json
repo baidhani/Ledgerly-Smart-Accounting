@@ -8,7 +8,7 @@
     "stories_in_progress": 8,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 41,
+    "criteria_passed": 44,
     "points_awarded": 551
   },
   "stories": [
@@ -792,20 +792,20 @@
       "criteria": [
         {
           "text": "Given a new user role, when I assign permissions, then the user should only access allowed features.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a user with no permissions, when they attempt to access a feature, then access should be denied.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All changes to user roles and permissions must be logged with the admin's user ID.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
+      "files_touched": ["src/db.ts", "src/rolesPermissions.ts", "src/routes/rolesPermissions.ts", "src/routes/accounts.ts", "src/routes/ledger.ts", "src/app.ts", "tests/auditTrail.test.ts", "tests/rolesPermissions.test.ts"],
+      "tests_added": ["tests/rolesPermissions.test.ts"],
+      "notes": "Real requirePermission() enforcement applied to two existing sensitive routes (POST /accounts, POST /journal-entries/:id/post) rather than only this story's own new routes, after challenging an initial self-referential design. A default 'system' identity (no X-User-Id header) bypasses checks as a bootstrap exception, confirmed with the user. Changes logged to a separate user_activity_log table (not the financial audit_log) with the admin's user ID. Last story in the plan.",
       "updated_at": null,
       "verification": {
         "state": "in_progress",

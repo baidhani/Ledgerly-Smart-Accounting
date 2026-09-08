@@ -4,8 +4,8 @@
   "totals": {
     "stories_total": 21,
     "stories_verified": 0,
-    "criteria_total": 29,
-    "criteria_passed": 11,
+    "criteria_total": 31,
+    "criteria_passed": 14,
     "points_awarded": 0
   },
   "stories": [
@@ -30,7 +30,11 @@
       { "text": "Given a request to add an account with invalid details, when I try to save, then the system rejects the request.", "passed": true },
       { "text": "Trust: All changes to the chart of accounts are logged in the audit trail.", "passed": true }
     ], "verification": { "state": "submitted", "commit": "5acc388", "points": 0 } },
-    { "id": "STORY-003", "criteria": [{ "text": "Manual journal entries can be created following debit and credit rules.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-003", "criteria": [
+      { "text": "Given a journal entry request, when I enter valid debit and credit amounts, then the system records the entry.", "passed": true },
+      { "text": "Given an unbalanced journal entry request, when I try to save, then the system rejects the entry.", "passed": true },
+      { "text": "Trust: All journal entries are logged in the audit trail.", "passed": true }
+    ], "verification": { "state": "submitted", "commit": "0c79a72", "points": 0 } },
     { "id": "STORY-004", "criteria": [{ "text": "Transactions can be posted to the general ledger.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
     { "id": "STORY-005", "criteria": [{ "text": "A trial balance can be generated from posted transactions.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
     { "id": "STORY-006", "criteria": [{ "text": "An income statement and balance sheet can be produced.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },

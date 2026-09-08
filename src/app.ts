@@ -7,6 +7,7 @@ import { reportingRouter } from "./routes/reporting";
 import { auditRouter } from "./routes/audit";
 import { businessPartnersRouter } from "./routes/businessPartners";
 import { receivablesPayablesRouter } from "./routes/receivablesPayables";
+import { salesPurchasingRouter } from "./routes/salesPurchasing";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -24,6 +25,7 @@ export function createApp(db: Database.Database): Express {
   app.use(auditRouter(db));
   app.use(businessPartnersRouter(db));
   app.use(receivablesPayablesRouter(db));
+  app.use(salesPurchasingRouter(db));
 
   return app;
 }

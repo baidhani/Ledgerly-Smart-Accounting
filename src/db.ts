@@ -128,6 +128,63 @@ function migrate(db: Database.Database): void {
       FOREIGN KEY (journal_entry_id) REFERENCES journal_entries(id),
       CHECK (amount_cents > 0)
     );
+
+    -- Minimal walking-skeleton inventory surface: only what a sales/purchase
+    -- order needs to update. No dedicated inventory CRUD here — that's
+    -- STORY-011's job, not this one's.
+    CREATE TABLE IF NOT EXISTS inventory_items (
+      id TEXT PRIMARY KEY,
+      sku TEXT NOT NULL UNIQUE,
+      name TEXT NOT NULL,
+      quantity_on_hand INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      CHECK (quantity_on_hand >= 0)
+    );
+
+    CREATE TABLE IF NOT EXISTS sales_orders (
+      id TEXT PRIMARY KEY,
+      order_number TEXT NOT NULL UNIQUE,
+      customer_id TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'draft',
+      created_at TEXT NOT NULL,
+      processed_at TEXT,
+      FOREIGN KEY (customer_id) REFERENCES business_partners(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS sales_order_lines (
+      id TEXT PRIMARY KEY,
+      sales_order_id TEXT NOT NULL,
+      inventory_item_id TEXT NOT NULL,
+      quantity INTEGER NOT NULL,
+      unit_price_cents INTEGER NOT NULL,
+      FOREIGN KEY (sales_order_id) REFERENCES sales_orders(id),
+      FOREIGN KEY (inventory_item_id) REFERENCES inventory_items(id),
+      CHECK (quantity > 0),
+      CHECK (unit_price_cents > 0)
+    );
+
+    CREATE TABLE IF NOT EXISTS purchase_orders (
+      id TEXT PRIMARY KEY,
+      order_number TEXT NOT NULL UNIQUE,
+      vendor_id TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'draft',
+      created_at TEXT NOT NULL,
+      processed_at TEXT,
+      FOREIGN KEY (vendor_id) REFERENCES business_partners(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS purchase_order_lines (
+      id TEXT PRIMARY KEY,
+      purchase_order_id TEXT NOT NULL,
+      inventory_item_id TEXT NOT NULL,
+      quantity INTEGER NOT NULL,
+      unit_cost_cents INTEGER NOT NULL,
+      FOREIGN KEY (purchase_order_id) REFERENCES purchase_orders(id),
+      FOREIGN KEY (inventory_item_id) REFERENCES inventory_items(id),
+      CHECK (quantity > 0),
+      CHECK (unit_cost_cents > 0)
+    );
   `);
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");

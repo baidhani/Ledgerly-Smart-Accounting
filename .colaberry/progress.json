@@ -4,8 +4,8 @@
   "totals": {
     "stories_total": 21,
     "stories_verified": 0,
-    "criteria_total": 35,
-    "criteria_passed": 20,
+    "criteria_total": 37,
+    "criteria_passed": 23,
     "points_awarded": 0
   },
   "stories": [
@@ -45,7 +45,11 @@
       { "text": "Given no transactions, when I generate a trial balance, then the system shows a zero balance.", "passed": true },
       { "text": "Trust: Trial balance generation is logged in the audit trail.", "passed": true }
     ], "verification": { "state": "submitted", "commit": "cdc9b5d", "points": 0 } },
-    { "id": "STORY-006", "criteria": [{ "text": "An income statement and balance sheet can be produced.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
+    { "id": "STORY-006", "criteria": [
+      { "text": "Given a request for financial statements, when I generate them, then the system produces an income statement and balance sheet.", "passed": true },
+      { "text": "Given incomplete data, when I try to generate financial statements, then the system alerts me to missing information.", "passed": true },
+      { "text": "Trust: Financial statement generation is logged in the audit trail.", "passed": true }
+    ], "verification": { "state": "submitted", "commit": "a9a752e", "points": 0 } },
     { "id": "STORY-018", "criteria": [{ "text": "Unbalanced transactions are rejected before posting.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
     { "id": "STORY-019", "criteria": [{ "text": "Every financial transaction is recorded in an audit trail.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
     { "id": "STORY-007", "criteria": [{ "text": "Customer and vendor profiles can be created and maintained.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },

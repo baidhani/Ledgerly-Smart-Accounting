@@ -22,6 +22,11 @@ export class BranchNotFoundError extends Error {
   }
 }
 
+export interface BulkBranchValidationResult {
+  valid: boolean;
+  errors: { index: number; missing: string[]; invalid: string[] }[];
+}
+
 export interface BranchCreateInput {
   code: string;
   name: string;
@@ -195,4 +200,62 @@ export function updateBranch(db: Database.Database, id: string, input: BranchUpd
   tx();
 
   return toBranch(updated);
+}
+
+/**
+ * Validates a whole multi-branch setup request before anything is saved:
+ * per-item field validity, duplicate codes within the batch itself, and
+ * duplicate codes against branches that already exist. This is the "data
+ * consistency across branches" the brief calls for - a batch that would
+ * leave two branches sharing a code, or half-save if one item is bad, is
+ * rejected wholesale rather than partially applied.
+ */
+export function validateBulkBranchInput(db: Database.Database, items: unknown): BulkBranchValidationResult {
+  const errors: { index: number; missing: string[]; invalid: string[] }[] = [];
+
+  if (!Array.isArray(items) || items.length === 0) {
+    return { valid: false, errors: [{ index: -1, missing: [], invalid: ["expected a non-empty array of branch configurations"] }] };
+  }
+
+  const existingCodes = new Set(
+    (db.prepare("SELECT code FROM branches").all() as { code: string }[]).map((r) => r.code)
+  );
+  const seenInBatch = new Map<string, number>();
+
+  items.forEach((item, index) => {
+    if (item === null || typeof item !== "object") {
+      errors.push({ index, missing: [], invalid: ["expected an object"] });
+      return;
+    }
+    const { valid, missing, invalid } = validateBranchCreateInput(item as Record<string, unknown>);
+    const itemInvalid = [...invalid];
+
+    const code = (item as Record<string, unknown>).code;
+    if (typeof code === "string" && code.trim() !== "") {
+      if (existingCodes.has(code)) {
+        itemInvalid.push(`code (a branch with code "${code}" already exists)`);
+      } else if (seenInBatch.has(code)) {
+        itemInvalid.push(`code (duplicated within this batch at index ${seenInBatch.get(code)})`);
+      } else {
+        seenInBatch.set(code, index);
+      }
+    }
+
+    if (missing.length > 0 || itemInvalid.length > 0) {
+      errors.push({ index, missing, invalid: itemInvalid });
+    }
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Saves a multi-branch setup request atomically: either every branch in the
+ * request is created, or none are - a partial save would itself be a data
+ * consistency violation. Callers must validate with validateBulkBranchInput
+ * first; this assumes the batch is already known-good.
+ */
+export function bulkConfigureBranches(db: Database.Database, items: BranchCreateInput[], userId: string): Branch[] {
+  const tx = db.transaction(() => items.map((item) => createBranch(db, item, userId)));
+  return tx();
 }

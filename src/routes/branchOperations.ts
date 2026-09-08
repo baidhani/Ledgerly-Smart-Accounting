@@ -7,6 +7,8 @@ import {
   updateBranch,
   validateBranchUpdateInput,
   BranchNotFoundError,
+  validateBulkBranchInput,
+  bulkConfigureBranches,
 } from "../branchOperations";
 import { getUserId } from "../actor";
 
@@ -37,6 +39,33 @@ export function branchOperationsRouter(db: Database.Database): Router {
         outcome: "failure",
       }));
       res.status(500).json({ error: "Could not save the branch. Please try again." });
+    }
+  });
+
+  router.post("/branches/bulk-configure", (req, res) => {
+    const body = req.body && typeof req.body === "object" ? req.body : {};
+    const { valid, errors } = validateBulkBranchInput(db, body.branches);
+
+    if (!valid) {
+      res.status(400).json({ error: "Multi-branch setup request is incomplete or invalid.", errors });
+      return;
+    }
+
+    try {
+      const branches = bulkConfigureBranches(db, body.branches, getUserId(req));
+      res.status(201).json({ branches });
+    } catch (err) {
+      if (err instanceof DuplicateBranchError) {
+        res.status(409).json({ error: err.message });
+        return;
+      }
+      console.error(JSON.stringify({
+        level: "error",
+        event: "bulk_branch_configure_failed",
+        error_class: err instanceof Error ? err.constructor.name : "UnknownError",
+        outcome: "failure",
+      }));
+      res.status(500).json({ error: "Could not save the multi-branch setup. No branches were created." });
     }
   });
 

@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import { randomUUID } from "node:crypto";
+import { recordAuditEvent } from "./auditLog";
 
 export interface CompanyProfileInput {
   name: string;
@@ -77,19 +78,16 @@ export function createCompanyProfile(db: Database.Database, input: CompanyProfil
     INSERT INTO companies (id, name, legal_entity_type, fiscal_year_start, base_currency, created_at, updated_at)
     VALUES (@id, @name, @legal_entity_type, @fiscal_year_start, @base_currency, @created_at, @updated_at)
   `);
-  const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
-    VALUES (@id, 'company', @entity_id, 'company_profile_created', @occurred_at, @user_id, @details)
-  `);
 
   const tx = db.transaction(() => {
     insertCompany.run(company);
-    insertAudit.run({
-      id: randomUUID(),
-      entity_id: company.id,
-      occurred_at: now,
-      user_id: userId,
-      details: JSON.stringify({ name: company.name }),
+    recordAuditEvent(db, {
+      entityType: "company",
+      entityId: company.id,
+      action: "company_profile_created",
+      userId,
+      occurredAt: now,
+      details: { name: company.name },
     });
   });
   tx();

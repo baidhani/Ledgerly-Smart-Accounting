@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import { randomUUID } from "node:crypto";
+import { recordAuditEvent } from "./auditLog";
 
 export interface AccountInput {
   code: string;
@@ -85,19 +86,16 @@ export function createAccount(db: Database.Database, input: AccountInput, userId
     INSERT INTO accounts (id, code, name, type, parent_account_id, is_active, created_at, updated_at)
     VALUES (@id, @code, @name, @type, @parent_account_id, @is_active, @created_at, @updated_at)
   `);
-  const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
-    VALUES (@id, 'account', @entity_id, 'account_created', @occurred_at, @user_id, @details)
-  `);
 
   const tx = db.transaction(() => {
     insertAccount.run({ ...account, is_active: account.is_active ? 1 : 0 });
-    insertAudit.run({
-      id: randomUUID(),
-      entity_id: account.id,
-      occurred_at: now,
-      user_id: userId,
-      details: JSON.stringify({ code: account.code, name: account.name }),
+    recordAuditEvent(db, {
+      entityType: "account",
+      entityId: account.id,
+      action: "account_created",
+      userId,
+      occurredAt: now,
+      details: { code: account.code, name: account.name },
     });
   });
 

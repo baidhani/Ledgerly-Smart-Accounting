@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import { randomUUID } from "node:crypto";
+import { recordAuditEvent } from "./auditLog";
 
 export interface GeneralLedgerLine {
   id: string;
@@ -54,17 +55,12 @@ interface JournalLineRow {
 }
 
 function logRejectedAttempt(db: Database.Database, journalEntryId: string, reasons: string[], userId: string): void {
-  db.prepare(
-    `
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
-    VALUES (@id, 'journal_entry', @entity_id, 'transaction_post_rejected', @occurred_at, @user_id, @details)
-  `
-  ).run({
-    id: randomUUID(),
-    entity_id: journalEntryId,
-    occurred_at: new Date().toISOString(),
-    user_id: userId,
-    details: JSON.stringify({ reasons }),
+  recordAuditEvent(db, {
+    entityType: "journal_entry",
+    entityId: journalEntryId,
+    action: "transaction_post_rejected",
+    userId,
+    details: { reasons },
   });
 }
 
@@ -158,22 +154,18 @@ export function postJournalEntry(db: Database.Database, journalEntryId: string, 
   const updateEntry = db.prepare(`
     UPDATE journal_entries SET status = 'posted', posted_at = @posted_at WHERE id = @id
   `);
-  const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
-    VALUES (@id, 'journal_entry', @entity_id, 'transaction_posted', @occurred_at, @user_id, @details)
-  `);
-
   const tx = db.transaction(() => {
     for (const line of ledgerLines) {
       insertLedgerLine.run(line);
     }
     updateEntry.run({ id: journalEntryId, posted_at: now });
-    insertAudit.run({
-      id: randomUUID(),
-      entity_id: journalEntryId,
-      occurred_at: now,
-      user_id: userId,
-      details: JSON.stringify({ line_count: ledgerLines.length }),
+    recordAuditEvent(db, {
+      entityType: "journal_entry",
+      entityId: journalEntryId,
+      action: "transaction_posted",
+      userId,
+      occurredAt: now,
+      details: { line_count: ledgerLines.length },
     });
   });
   tx();

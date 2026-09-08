@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import { randomUUID } from "node:crypto";
+import { recordAuditEvent } from "./auditLog";
 
 export interface StatementLine {
   account_id: string | null;
@@ -120,22 +121,18 @@ export function generateFinancialStatements(db: Database.Database, userId: strin
 
   const generatedAt = new Date().toISOString();
 
-  db.prepare(
-    `
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
-    VALUES (@id, 'financial_statements', @entity_id, 'financial_statements_generated', @occurred_at, @user_id, @details)
-  `
-  ).run({
-    id: randomUUID(),
-    entity_id: randomUUID(),
-    occurred_at: generatedAt,
-    user_id: userId,
-    details: JSON.stringify({
+  recordAuditEvent(db, {
+    entityType: "financial_statements",
+    entityId: randomUUID(),
+    action: "financial_statements_generated",
+    userId,
+    occurredAt: generatedAt,
+    details: {
       net_income_cents,
       total_assets_cents,
       total_liabilities_cents,
       total_equity_cents,
-    }),
+    },
   });
 
   return {

@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import { randomUUID } from "node:crypto";
+import { recordAuditEvent } from "./auditLog";
 
 export interface JournalLineInput {
   account_id: string;
@@ -134,22 +135,18 @@ export function createJournalEntry(db: Database.Database, input: JournalEntryInp
     INSERT INTO journal_lines (id, journal_entry_id, account_id, debit_cents, credit_cents)
     VALUES (@id, @journal_entry_id, @account_id, @debit_cents, @credit_cents)
   `);
-  const insertAudit = db.prepare(`
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
-    VALUES (@id, 'journal_entry', @entity_id, 'journal_entry_created', @occurred_at, @user_id, @details)
-  `);
-
   const tx = db.transaction(() => {
     insertEntry.run({ id: entryId, entry_date: input.entry_date, memo: input.memo ?? null, created_at: now });
     for (const line of lines) {
       insertLine.run({ ...line, journal_entry_id: entryId });
     }
-    insertAudit.run({
-      id: randomUUID(),
-      entity_id: entryId,
-      occurred_at: now,
-      user_id: userId,
-      details: JSON.stringify({ entry_date: input.entry_date, line_count: lines.length }),
+    recordAuditEvent(db, {
+      entityType: "journal_entry",
+      entityId: entryId,
+      action: "journal_entry_created",
+      userId,
+      occurredAt: now,
+      details: { entry_date: input.entry_date, line_count: lines.length },
     });
   });
   tx();

@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import { randomUUID } from "node:crypto";
+import { recordAuditEvent } from "./auditLog";
 
 export interface TrialBalanceLine {
   account_id: string;
@@ -47,21 +48,17 @@ export function generateTrialBalance(db: Database.Database, userId: string): Tri
 
   const generatedAt = new Date().toISOString();
 
-  db.prepare(
-    `
-    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, user_id, details)
-    VALUES (@id, 'trial_balance', @entity_id, 'trial_balance_generated', @occurred_at, @user_id, @details)
-  `
-  ).run({
-    id: randomUUID(),
-    entity_id: randomUUID(),
-    occurred_at: generatedAt,
-    user_id: userId,
-    details: JSON.stringify({
+  recordAuditEvent(db, {
+    entityType: "trial_balance",
+    entityId: randomUUID(),
+    action: "trial_balance_generated",
+    userId,
+    occurredAt: generatedAt,
+    details: {
       account_count: rows.length,
       debit_cents: totals.debit_cents,
       credit_cents: totals.credit_cents,
-    }),
+    },
   });
 
   return { generated_at: generatedAt, accounts: rows, totals };

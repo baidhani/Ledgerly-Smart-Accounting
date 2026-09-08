@@ -90,6 +90,12 @@ describe("POST /journal-entries/:id/post", () => {
 
     expect(res.status).toBe(404);
     expect(res.body.error).toBeTruthy();
+
+    const audit = db.prepare("SELECT * FROM audit_log WHERE action = 'transaction_post_rejected'").get() as
+      | { entity_id: string }
+      | undefined;
+    expect(audit).toBeTruthy();
+    expect(audit?.entity_id).toBe("does-not-exist");
   });
 
   it("rejects an unbalanced posting without writing to the ledger (failure path)", async () => {
@@ -118,6 +124,32 @@ describe("POST /journal-entries/:id/post", () => {
 
     const status = db.prepare("SELECT status FROM journal_entries WHERE id = 'bad1'").get() as { status: string };
     expect(status.status).toBe("draft");
+
+    const audit = db.prepare("SELECT * FROM audit_log WHERE action = 'transaction_post_rejected'").get() as
+      | { entity_id: string; details: string }
+      | undefined;
+    expect(audit).toBeTruthy();
+    expect(audit?.entity_id).toBe("bad1");
+    expect(JSON.parse(audit!.details).reasons.join(" ")).toMatch(/unbalanced/);
+  });
+
+  it("logs every transaction attempt with its success or failure status, not just successes (Trust criterion)", async () => {
+    const app = createApp(db);
+    const entryId = await createDraftEntry(app);
+
+    // One successful attempt, one rejected attempt (nonexistent entry).
+    await request(app).post(`/journal-entries/${entryId}/post`);
+    await request(app).post("/journal-entries/does-not-exist/post");
+
+    const successCount = db.prepare("SELECT COUNT(*) c FROM audit_log WHERE action = 'transaction_posted'").get() as {
+      c: number;
+    };
+    const rejectedCount = db
+      .prepare("SELECT COUNT(*) c FROM audit_log WHERE action = 'transaction_post_rejected'")
+      .get() as { c: number };
+
+    expect(successCount.c).toBe(1);
+    expect(rejectedCount.c).toBe(1);
   });
 
   it("returns a 500 without leaking internals when the database fails during posting (failure path)", async () => {

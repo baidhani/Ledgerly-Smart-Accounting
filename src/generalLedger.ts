@@ -53,6 +53,20 @@ interface JournalLineRow {
   credit_cents: number;
 }
 
+function logRejectedAttempt(db: Database.Database, journalEntryId: string, reasons: string[]): void {
+  db.prepare(
+    `
+    INSERT INTO audit_log (id, entity_type, entity_id, action, occurred_at, details)
+    VALUES (@id, 'journal_entry', @entity_id, 'transaction_post_rejected', @occurred_at, @details)
+  `
+  ).run({
+    id: randomUUID(),
+    entity_id: journalEntryId,
+    occurred_at: new Date().toISOString(),
+    details: JSON.stringify({ reasons }),
+  });
+}
+
 function loadAlreadyPosted(db: Database.Database, entryId: string): PostedJournalEntry {
   const ledgerLines = db
     .prepare("SELECT * FROM general_ledger WHERE journal_entry_id = ?")
@@ -107,6 +121,7 @@ export function postJournalEntry(db: Database.Database, journalEntryId: string):
     | undefined;
 
   if (!entry) {
+    logRejectedAttempt(db, journalEntryId, [`no journal entry with id "${journalEntryId}" exists`]);
     throw new JournalEntryNotFoundError(journalEntryId);
   }
 
@@ -120,6 +135,7 @@ export function postJournalEntry(db: Database.Database, journalEntryId: string):
 
   const errors = findPostingErrors(db, lines);
   if (errors.length > 0) {
+    logRejectedAttempt(db, journalEntryId, errors);
     throw new UnpostableTransactionError(errors);
   }
 

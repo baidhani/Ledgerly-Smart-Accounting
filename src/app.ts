@@ -6,6 +6,7 @@ import { ledgerRouter } from "./routes/ledger";
 import { reportingRouter } from "./routes/reporting";
 import { auditRouter } from "./routes/audit";
 import { businessPartnersRouter } from "./routes/businessPartners";
+import { receivablesPayablesRouter } from "./routes/receivablesPayables";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -22,6 +23,7 @@ export function createApp(db: Database.Database): Express {
   app.use(reportingRouter(db));
   app.use(auditRouter(db));
   app.use(businessPartnersRouter(db));
+  app.use(receivablesPayablesRouter(db));
 
   return app;
 }

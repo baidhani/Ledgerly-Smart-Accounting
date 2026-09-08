@@ -94,6 +94,40 @@ function migrate(db: Database.Database): void {
       updated_at TEXT NOT NULL,
       UNIQUE (type, name)
     );
+
+    CREATE TABLE IF NOT EXISTS ar_invoices (
+      id TEXT PRIMARY KEY,
+      invoice_number TEXT NOT NULL UNIQUE,
+      customer_id TEXT NOT NULL,
+      ar_account_id TEXT NOT NULL,
+      amount_cents INTEGER NOT NULL,
+      due_date TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'unpaid',
+      journal_entry_id TEXT,
+      created_at TEXT NOT NULL,
+      paid_at TEXT,
+      FOREIGN KEY (customer_id) REFERENCES business_partners(id),
+      FOREIGN KEY (ar_account_id) REFERENCES accounts(id),
+      FOREIGN KEY (journal_entry_id) REFERENCES journal_entries(id),
+      CHECK (amount_cents > 0)
+    );
+
+    CREATE TABLE IF NOT EXISTS ap_bills (
+      id TEXT PRIMARY KEY,
+      bill_number TEXT NOT NULL UNIQUE,
+      vendor_id TEXT NOT NULL,
+      ap_account_id TEXT NOT NULL,
+      amount_cents INTEGER NOT NULL,
+      due_date TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'unpaid',
+      journal_entry_id TEXT,
+      created_at TEXT NOT NULL,
+      paid_at TEXT,
+      FOREIGN KEY (vendor_id) REFERENCES business_partners(id),
+      FOREIGN KEY (ap_account_id) REFERENCES accounts(id),
+      FOREIGN KEY (journal_entry_id) REFERENCES journal_entries(id),
+      CHECK (amount_cents > 0)
+    );
   `);
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");

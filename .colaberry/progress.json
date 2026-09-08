@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 9,
+    "stories_verified": 10,
     "stories_submitted": 0,
-    "stories_in_progress": 12,
+    "stories_in_progress": 11,
     "stories_not_started": 0,
     "criteria_total": 65,
     "criteria_passed": 32,
-    "points_awarded": 399
+    "points_awarded": 437
   },
   "stories": [
     {
@@ -282,24 +282,28 @@
           "passed": true
         }
       ],
-      "files_touched": ["src/db.ts", "src/businessPartners.ts", "src/routes/businessPartners.ts", "src/app.ts", "tests/businessPartners.test.ts"],
-      "tests_added": ["tests/businessPartners.test.ts"],
+      "files_touched": [
+        "src/db.ts",
+        "src/businessPartners.ts",
+        "src/routes/businessPartners.ts",
+        "src/app.ts",
+        "tests/businessPartners.test.ts"
+      ],
+      "tests_added": [
+        "tests/businessPartners.test.ts"
+      ],
       "notes": "POST /customers and POST /vendors, each pinning its own type server-side rather than trusting the request body. Duplicate detection uses a (type, name) natural key via a UNIQUE constraint. Writes go through the consolidated recordAuditEvent() helper from the release-boundary retro, not a fresh inline insert.",
       "updated_at": null,
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a new customer profile request, when I enter valid details, then the system saves the profile.",
-          "Given an invalid customer profile request, when I try to save, then the system rejects the request.",
-          "Trust: All changes to customer and vendor profiles are logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T13:11:37.293Z",
+        "commit_sha": "7f259809611e3875dc1a77ab350e0ffe91bb29c6",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/7f259809611e3875dc1a77ab350e0ffe91bb29c6",
+        "commit_at": "2026-09-08T13:10:45Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

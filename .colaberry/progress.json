@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 18,
+    "stories_verified": 19,
     "stories_submitted": 0,
-    "stories_in_progress": 3,
+    "stories_in_progress": 2,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 56,
-    "points_awarded": 741
+    "criteria_passed": 59,
+    "points_awarded": 779
   },
   "stories": [
     {
@@ -259,7 +259,7 @@
         "verified_at": "2026-09-08T04:34:28.092Z",
         "commit_sha": "a9a752e7711ef8b7737439ddcdb75da000b94fe0",
         "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/a9a752e7711ef8b7737439ddcdb75da000b94fe0",
-        "commit_at": "2026-09-08T04:30:03Z",
+        "commit_at": "2026-09-08T04:34:00Z",
         "points_awarded": 38,
         "outstanding": []
       }
@@ -635,19 +635,15 @@
       "notes": "Deliberately rule-based, not a real external LLM call - discussed and confirmed with the user, since a real provider requires a paid API credential (governance-boundary decision) and none of the 3 criteria require a live external call to pass. Three analyses (unbalanced_risk, budget_variance_flags, asset_position_summary) computed live from existing data; module has zero write paths to any accounting table by construction, verified with an explicit before/after row-count assertion. Commit 1011b14.",
       "updated_at": "2026-09-08T17:40:00Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a financial query, when I request AI analysis, then the system provides insights without altering records.",
-          "Given an AI analysis error, when I try to generate insights, then the system alerts me to the issue.",
-          "Trust: All AI analysis requests are logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T17:41:40.184Z",
+        "commit_sha": "1011b1443373ace4dd6ee0b5fd2148a5f790ac30",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/1011b1443373ace4dd6ee0b5fd2148a5f790ac30",
+        "commit_at": "2026-09-08T17:40:49Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

@@ -8,7 +8,7 @@
     "stories_in_progress": 12,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 29,
+    "criteria_passed": 32,
     "points_awarded": 399
   },
   "stories": [
@@ -271,20 +271,20 @@
       "criteria": [
         {
           "text": "Given a new customer profile request, when I enter valid details, then the system saves the profile.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given an invalid customer profile request, when I try to save, then the system rejects the request.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All changes to customer and vendor profiles are logged in the audit trail.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
+      "files_touched": ["src/db.ts", "src/businessPartners.ts", "src/routes/businessPartners.ts", "src/app.ts", "tests/businessPartners.test.ts"],
+      "tests_added": ["tests/businessPartners.test.ts"],
+      "notes": "POST /customers and POST /vendors, each pinning its own type server-side rather than trusting the request body. Duplicate detection uses a (type, name) natural key via a UNIQUE constraint. Writes go through the consolidated recordAuditEvent() helper from the release-boundary retro, not a fresh inline insert.",
       "updated_at": null,
       "verification": {
         "state": "in_progress",

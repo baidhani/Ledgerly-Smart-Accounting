@@ -3,6 +3,7 @@ import type Database from "better-sqlite3";
 import { createJournalEntry, validateJournalEntryInput } from "../journalEntries";
 import { postJournalEntry, JournalEntryNotFoundError, UnpostableTransactionError } from "../generalLedger";
 import { getUserId } from "../actor";
+import { requirePermission } from "./rolesPermissions";
 
 export function ledgerRouter(db: Database.Database): Router {
   const router = Router();
@@ -39,7 +40,7 @@ export function ledgerRouter(db: Database.Database): Router {
     }
   });
 
-  router.post("/journal-entries/:id/post", (req, res) => {
+  router.post("/journal-entries/:id/post", requirePermission(db, "journal_entries:post"), (req, res) => {
     try {
       const posted = postJournalEntry(db, req.params.id, getUserId(req));
       res.status(200).json(posted);

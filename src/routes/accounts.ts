@@ -2,11 +2,12 @@ import { Router } from "express";
 import type Database from "better-sqlite3";
 import { createAccount, validateAccountInput, DuplicateAccountError } from "../accounts";
 import { getUserId } from "../actor";
+import { requirePermission } from "./rolesPermissions";
 
 export function accountsRouter(db: Database.Database): Router {
   const router = Router();
 
-  router.post("/accounts", (req, res) => {
+  router.post("/accounts", requirePermission(db, "accounts:create"), (req, res) => {
     const body = req.body && typeof req.body === "object" ? req.body : {};
 
     try {

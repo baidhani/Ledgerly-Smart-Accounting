@@ -20,6 +20,19 @@ describe("GET /audit-log", () => {
     ).run({ now });
     cashId = "cash";
     revenueId = "rev";
+
+    // STORY-020 gates POST /journal-entries/:id/post behind the
+    // "journal_entries:post" permission. These tests use named actors
+    // (alice, bob) to prove user_id threading, so they need that
+    // permission granted directly — the same way other tests seed their
+    // prerequisite data via direct inserts, not through the API.
+    db.prepare("INSERT INTO roles (id, name, created_at) VALUES ('role1','poster',@now)").run({ now });
+    db.prepare("INSERT INTO permissions (id, key, created_at) VALUES ('perm1','journal_entries:post',@now)").run({ now });
+    db.prepare(
+      "INSERT INTO role_permissions (id, role_id, permission_id, created_at) VALUES ('rp1','role1','perm1',@now)"
+    ).run({ now });
+    db.prepare("INSERT INTO user_roles (user_id, role_id, assigned_at) VALUES ('alice','role1',@now)").run({ now });
+    db.prepare("INSERT INTO user_roles (user_id, role_id, assigned_at) VALUES ('bob','role1',@now)").run({ now });
   });
 
   afterEach(() => {

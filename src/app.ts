@@ -9,6 +9,7 @@ import { businessPartnersRouter } from "./routes/businessPartners";
 import { receivablesPayablesRouter } from "./routes/receivablesPayables";
 import { salesPurchasingRouter } from "./routes/salesPurchasing";
 import { bankTransactionsRouter } from "./routes/bankTransactions";
+import { rolesPermissionsRouter } from "./routes/rolesPermissions";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -28,6 +29,7 @@ export function createApp(db: Database.Database): Express {
   app.use(receivablesPayablesRouter(db));
   app.use(salesPurchasingRouter(db));
   app.use(bankTransactionsRouter(db));
+  app.use(rolesPermissionsRouter(db));
 
   return app;
 }

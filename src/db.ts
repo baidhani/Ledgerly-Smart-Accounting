@@ -204,6 +204,49 @@ function migrate(db: Database.Database): void {
       CHECK (amount_cents > 0),
       CHECK (direction IN ('deposit', 'withdrawal'))
     );
+
+    CREATE TABLE IF NOT EXISTS roles (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL UNIQUE,
+      created_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS permissions (
+      id TEXT PRIMARY KEY,
+      key TEXT NOT NULL UNIQUE,
+      created_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS role_permissions (
+      id TEXT PRIMARY KEY,
+      role_id TEXT NOT NULL,
+      permission_id TEXT NOT NULL,
+      created_at TEXT NOT NULL,
+      FOREIGN KEY (role_id) REFERENCES roles(id),
+      FOREIGN KEY (permission_id) REFERENCES permissions(id),
+      UNIQUE (role_id, permission_id)
+    );
+
+    -- One role per user_id. user_id is the same string getUserId() already
+    -- extracts from X-User-Id — no separate "users" table, since no
+    -- authentication exists yet (same compatibility-mode reasoning as
+    -- audit_log.user_id from STORY-019).
+    CREATE TABLE IF NOT EXISTS user_roles (
+      user_id TEXT PRIMARY KEY,
+      role_id TEXT NOT NULL,
+      assigned_at TEXT NOT NULL,
+      FOREIGN KEY (role_id) REFERENCES roles(id)
+    );
+
+    -- Separate from audit_log (financial transactions) — this is the
+    -- brief's own named log for user/role/permission management activity.
+    CREATE TABLE IF NOT EXISTS user_activity_log (
+      id TEXT PRIMARY KEY,
+      admin_user_id TEXT NOT NULL,
+      action TEXT NOT NULL,
+      occurred_at TEXT NOT NULL,
+      details TEXT
+    );
   `);
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");

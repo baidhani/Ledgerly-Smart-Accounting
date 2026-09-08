@@ -185,6 +185,25 @@ function migrate(db: Database.Database): void {
       CHECK (quantity > 0),
       CHECK (unit_cost_cents > 0)
     );
+
+    CREATE TABLE IF NOT EXISTS bank_transactions (
+      id TEXT PRIMARY KEY,
+      reference TEXT NOT NULL UNIQUE,
+      cash_account_id TEXT NOT NULL,
+      contra_account_id TEXT NOT NULL,
+      amount_cents INTEGER NOT NULL,
+      direction TEXT NOT NULL,
+      transaction_date TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'unreconciled',
+      journal_entry_id TEXT,
+      created_at TEXT NOT NULL,
+      reconciled_at TEXT,
+      FOREIGN KEY (cash_account_id) REFERENCES accounts(id),
+      FOREIGN KEY (contra_account_id) REFERENCES accounts(id),
+      FOREIGN KEY (journal_entry_id) REFERENCES journal_entries(id),
+      CHECK (amount_cents > 0),
+      CHECK (direction IN ('deposit', 'withdrawal'))
+    );
   `);
 
   addColumnIfMissing(db, "journal_entries", "status", "TEXT NOT NULL DEFAULT 'draft'");

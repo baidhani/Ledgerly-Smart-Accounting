@@ -568,21 +568,30 @@
       "criteria": [
         {
           "text": "Given a dashboard request, when I configure it, then the system displays the dashboard with real-time data.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a reporting error, when I try to generate a report, then the system alerts me to the issue.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All dashboard configurations and report generations are logged in the audit trail.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "src/db.ts",
+        "src/dashboards.ts",
+        "src/routes/dashboards.ts",
+        "src/app.ts",
+        "tests/dashboards.test.ts",
+        ".colaberry/plan.json"
+      ],
+      "tests_added": [
+        "tests/dashboards.test.ts"
+      ],
+      "notes": "dashboards table stores only widget config; GET /dashboards/:id/render recomputes every widget live from current tables on each call (trial_balance, budget_summary, branch_summary), so real-time data is genuinely real-time. Rendering a nonexistent dashboard returns a 404 alert instead of crashing. Verified live via HTTP against a running server plus direct SQLite queries, in addition to the automated test suite. Commit ddb97e9.",
+      "updated_at": "2026-09-08T17:25:00Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

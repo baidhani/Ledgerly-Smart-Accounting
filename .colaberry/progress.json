@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 8,
+    "stories_verified": 9,
     "stories_submitted": 0,
-    "stories_in_progress": 13,
+    "stories_in_progress": 12,
     "stories_not_started": 0,
     "criteria_total": 65,
     "criteria_passed": 29,
-    "points_awarded": 361
+    "points_awarded": 399
   },
   "stories": [
     {
@@ -739,24 +739,34 @@
           "passed": true
         }
       ],
-      "files_touched": ["src/db.ts", "src/actor.ts", "src/auditTrail.ts", "src/app.ts", "src/companies.ts", "src/accounts.ts", "src/journalEntries.ts", "src/generalLedger.ts", "src/trialBalance.ts", "src/financialStatements.ts", "tests/auditTrail.test.ts"],
-      "tests_added": ["tests/auditTrail.test.ts"],
+      "files_touched": [
+        "src/db.ts",
+        "src/actor.ts",
+        "src/auditTrail.ts",
+        "src/app.ts",
+        "src/companies.ts",
+        "src/accounts.ts",
+        "src/journalEntries.ts",
+        "src/generalLedger.ts",
+        "src/trialBalance.ts",
+        "src/financialStatements.ts",
+        "tests/auditTrail.test.ts"
+      ],
+      "tests_added": [
+        "tests/auditTrail.test.ts"
+      ],
       "notes": "GET /audit-log (entity_type/entity_id filters) derives a success/failure status from the action name and parses details defensively. Added a real user_id column to audit_log (compatibility-mode placeholder: an X-User-Id header, default 'system', pending real auth in a future story) and threaded it through every audit_log write across all six service modules, not just journal-entry/posting events.",
       "updated_at": null,
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a posted transaction, when I view the audit trail, then it should display the transaction details and status.",
-          "Given a failed transaction attempt, when I view the audit trail, then it should display the attempt details and failure reason.",
-          "Trust: The audit trail must record every transaction attempt with a timestamp and user ID."
-        ]
+        "verified_at": "2026-09-08T05:26:36.994Z",
+        "commit_sha": "3508cb118422b2a841fb9554309879919c8eb07b",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/3508cb118422b2a841fb9554309879919c8eb07b",
+        "commit_at": "2026-09-08T05:25:22Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

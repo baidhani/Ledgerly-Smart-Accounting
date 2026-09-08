@@ -8,7 +8,7 @@
     "stories_in_progress": 14,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 23,
+    "criteria_passed": 26,
     "points_awarded": 323
   },
   "stories": [
@@ -689,20 +689,20 @@
       "criteria": [
         {
           "text": "Given a transaction with balanced debit and credit entries, when I post the transaction, then it should be accepted.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a transaction with unbalanced debit and credit entries, when I attempt to post the transaction, then it should be rejected with an error message.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All transaction attempts must be logged with their success or failure status.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
+      "files_touched": ["src/generalLedger.ts", "tests/generalLedger.test.ts"],
+      "tests_added": ["tests/generalLedger.test.ts"],
+      "notes": "Balanced/unbalanced posting validation already existed from STORY-004. Added logRejectedAttempt() so a rejected posting attempt (not-found or unbalanced) logs a 'transaction_post_rejected' audit entry, closing the gap where only successes were logged. Accounting-period validation from REQ-009's failure-paths list is explicitly out of scope: no acceptance criterion tests it, and no period concept exists in this codebase yet — confirmed with the user rather than assumed.",
       "updated_at": null,
       "verification": {
         "state": "in_progress",

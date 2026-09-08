@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import type Database from "better-sqlite3";
 import { createCompanyProfile, validateCompanyProfileInput } from "./companies";
 import { createAccount, validateAccountInput, DuplicateAccountError } from "./accounts";
+import { createJournalEntry, validateJournalEntryInput } from "./journalEntries";
 
 export function createApp(db: Database.Database): Express {
   const app = express();
@@ -46,18 +47,19 @@ export function createApp(db: Database.Database): Express {
 
   app.post("/accounts", (req, res) => {
     const body = req.body && typeof req.body === "object" ? req.body : {};
-    const { valid, missing, invalid } = validateAccountInput(db, body);
-
-    if (!valid) {
-      res.status(400).json({
-        error: "Account details are incomplete or invalid.",
-        missing_fields: missing,
-        invalid_fields: invalid,
-      });
-      return;
-    }
 
     try {
+      const { valid, missing, invalid } = validateAccountInput(db, body);
+
+      if (!valid) {
+        res.status(400).json({
+          error: "Account details are incomplete or invalid.",
+          missing_fields: missing,
+          invalid_fields: invalid,
+        });
+        return;
+      }
+
       const account = createAccount(db, {
         code: body.code,
         name: body.name,
@@ -77,6 +79,38 @@ export function createApp(db: Database.Database): Express {
         outcome: "failure",
       }));
       res.status(500).json({ error: "Could not save the account. Please try again." });
+    }
+  });
+
+  app.post("/journal-entries", (req, res) => {
+    const body = req.body && typeof req.body === "object" ? req.body : {};
+
+    try {
+      const { valid, missing, invalid } = validateJournalEntryInput(db, body);
+
+      if (!valid) {
+        res.status(400).json({
+          error: "Journal entry is incomplete or invalid.",
+          missing_fields: missing,
+          invalid_fields: invalid,
+        });
+        return;
+      }
+
+      const entry = createJournalEntry(db, {
+        entry_date: body.entry_date,
+        memo: body.memo ?? null,
+        lines: body.lines,
+      });
+      res.status(201).json(entry);
+    } catch (err) {
+      console.error(JSON.stringify({
+        level: "error",
+        event: "journal_entry_save_failed",
+        error_class: err instanceof Error ? err.constructor.name : "UnknownError",
+        outcome: "failure",
+      }));
+      res.status(500).json({ error: "Could not save the journal entry. Please try again." });
     }
   });
 

@@ -47,5 +47,25 @@ function migrate(db: Database.Database): void {
       updated_at TEXT NOT NULL,
       FOREIGN KEY (parent_account_id) REFERENCES accounts(id)
     );
+
+    CREATE TABLE IF NOT EXISTS journal_entries (
+      id TEXT PRIMARY KEY,
+      entry_date TEXT NOT NULL,
+      memo TEXT,
+      created_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS journal_lines (
+      id TEXT PRIMARY KEY,
+      journal_entry_id TEXT NOT NULL,
+      account_id TEXT NOT NULL,
+      debit_cents INTEGER NOT NULL DEFAULT 0,
+      credit_cents INTEGER NOT NULL DEFAULT 0,
+      FOREIGN KEY (journal_entry_id) REFERENCES journal_entries(id),
+      FOREIGN KEY (account_id) REFERENCES accounts(id),
+      CHECK (debit_cents >= 0 AND credit_cents >= 0),
+      CHECK (NOT (debit_cents > 0 AND credit_cents > 0)),
+      CHECK (debit_cents > 0 OR credit_cents > 0)
+    );
   `);
 }

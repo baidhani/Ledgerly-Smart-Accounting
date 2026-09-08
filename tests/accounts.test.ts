@@ -88,4 +88,19 @@ describe("POST /accounts", () => {
     expect(res.body.error).toBeTruthy();
     expect(JSON.stringify(res.body)).not.toMatch(/SqliteError|node_modules|at Object/);
   });
+
+  it("returns a 500 without leaking internals when the database fails during validation (failure path)", async () => {
+    // validateAccountInput queries the DB to check parent_account_id, so a DB
+    // failure can surface during validation, before createAccount ever runs.
+    const app = createApp(db);
+    db.close();
+
+    const res = await request(app)
+      .post("/accounts")
+      .send({ code: "1000", name: "Cash", type: "asset", parent_account_id: "some-id" });
+
+    expect(res.status).toBe(500);
+    expect(res.body.error).toBeTruthy();
+    expect(JSON.stringify(res.body)).not.toMatch(/SqliteError|node_modules|at Object/);
+  });
 });

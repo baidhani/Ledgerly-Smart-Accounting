@@ -482,21 +482,30 @@
       "criteria": [
         {
           "text": "Given a budget allocation, when I enter valid details, then the system saves the budget.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given an invalid budget allocation, when I try to save, then the system rejects the allocation.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All budget and cost center changes are logged in the audit trail.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "src/db.ts",
+        "src/budgeting.ts",
+        "src/routes/budgeting.ts",
+        "src/app.ts",
+        "tests/budgeting.test.ts",
+        ".colaberry/plan.json"
+      ],
+      "tests_added": [
+        "tests/budgeting.test.ts"
+      ],
+      "notes": "cost_centers and budgets tables; a budget allocation ties a cost center to a chart-of-accounts account for a period, with (cost_center_id, account_id, period) as the natural key for duplicate detection. Pure planning/tracking record - no journal entries, no variance reporting (reserved for STORY-014). Verified live via HTTP against a running server plus direct SQLite queries, in addition to the automated test suite. Commit f4ba48d.",
+      "updated_at": "2026-09-08T16:50:00Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

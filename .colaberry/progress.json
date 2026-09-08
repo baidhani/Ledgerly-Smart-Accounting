@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 11,
+    "stories_verified": 12,
     "stories_submitted": 0,
-    "stories_in_progress": 10,
+    "stories_in_progress": 9,
     "stories_not_started": 0,
     "criteria_total": 65,
     "criteria_passed": 38,
-    "points_awarded": 475
+    "points_awarded": 513
   },
   "stories": [
     {
@@ -49,7 +49,7 @@
         "verified_at": "2026-09-07T02:33:55.211Z",
         "commit_sha": "8e9e9fe7dabd2a2ac66bd0ba9c5895df96ad0df5",
         "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/8e9e9fe7dabd2a2ac66bd0ba9c5895df96ad0df5",
-        "commit_at": "2026-09-07T02:33:45Z",
+        "commit_at": "2026-09-07T02:45:14Z",
         "points_awarded": 95,
         "outstanding": []
       }
@@ -366,24 +366,28 @@
           "passed": true
         }
       ],
-      "files_touched": ["src/db.ts", "src/salesPurchasing.ts", "src/routes/salesPurchasing.ts", "src/app.ts", "tests/salesPurchasing.test.ts"],
-      "tests_added": ["tests/salesPurchasing.test.ts"],
+      "files_touched": [
+        "src/db.ts",
+        "src/salesPurchasing.ts",
+        "src/routes/salesPurchasing.ts",
+        "src/app.ts",
+        "tests/salesPurchasing.test.ts"
+      ],
+      "tests_added": [
+        "tests/salesPurchasing.test.ts"
+      ],
       "notes": "Resolved a genuine conflict in the brief: criterion 1 requires updating inventory, but STORY-011 (inventory management) is explicitly out of scope for this story. Built only the minimal inventory_items surface (quantity_on_hand, updated as a side effect of order processing) needed for this story's own criteria, with no CRUD/management endpoints — that stays STORY-011's job. Added a bare POST /inventory-items mid-build since nothing could otherwise create one through the API. No auto-posting to the general ledger on sales/purchases (deliberate, unlike STORY-008's AR/AP), since nothing in these criteria asks for it.",
       "updated_at": null,
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a sales order, when I process it, then the system updates inventory and sales records.",
-          "Given an invalid sales order, when I try to process, then the system rejects the order.",
-          "Trust: All sales and purchasing transactions are logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T14:05:48.779Z",
+        "commit_sha": "67683b48e78fb1559a5bca9aa4ab77863c4559ef",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/67683b48e78fb1559a5bca9aa4ab77863c4559ef",
+        "commit_at": "2026-09-08T14:04:55Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {

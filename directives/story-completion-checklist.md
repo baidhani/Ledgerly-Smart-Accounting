@@ -46,26 +46,44 @@ that mistake doesn't repeat.
    verified it is genuinely true** — not because the story looks finished,
    not to make the count come out even. Leave anything unverified `false`
    and say which lines and why.
-7. Set `verification.state` (`not_started` / `in_progress` / `submitted` /
-   `verified`) and `verification.commit` to the commit that will carry the
-   evidence. `submitted` is normal for locally-authored progress files —
-   `verified` is the portal's call, not yours, once it syncs.
-8. Update `.colaberry/manifest.json`'s `generated_at` to now, since the data
-   actually changed.
-9. Validate all three `.colaberry/*.json` files parse (e.g.
-   `python -c "import json; json.load(open(path))"` for each) before
-   committing. A file that fails to parse counts as no claims at all to the
-   portal, not as a highlighted error.
+7. Fill in the story's `files_touched` and `tests_added` arrays and a short
+   `notes` string. These are yours to maintain — the portal's own sync never
+   fills them in (confirmed empty even on stories it has independently
+   verified) — and the per-repo `CLAUDE.md` now asks for them explicitly.
+8. Leave `verification` alone once the portal has provisioned this file (its
+   `commit_sha`/`verified_at`/`points_awarded` are portal-computed from your
+   `passed` flags plus your pushed commit — don't hand-fill them). Before the
+   portal has ever synced `progress.json` to this repo, `verification.state`/
+   `.commit` are yours to set as a stand-in (`submitted` + the commit hash),
+   same as before.
+9. **Do not hand-edit `.colaberry/manifest.json` once the portal has synced
+   it to this repo.** Its schema changed to include `plan_sha256` and a
+   per-file hash list the portal uses to detect drift — it fully owns this
+   file on every sync and will refresh it after your push. Before the first
+   sync (no `manifest.json` in the repo yet), bump `generated_at` yourself
+   as a stand-in, same as before.
+10. Validate all `.colaberry/*.json` files parse (e.g.
+    `python -c "import json; json.load(open(path))"` for each) before
+    committing. A file that fails to parse counts as no claims at all to the
+    portal, not as a highlighted error.
 
 ## Commit and push
 
-10. Commit message names the story: `STORY-XXX: <what you did>` (or a
+11. Commit message names the story: `STORY-XXX: <what you did>` (or a
     `Story: STORY-XXX` line in the body) — the platform reads this to track
     progress. Never batch multiple stories into one commit.
-11. Push. If the GitHub push webhook is registered (see the portal's
+12. **Before pushing, `git fetch` and check whether `origin/main` has moved.**
+    The portal pushes its own sync commits directly to this repo (a
+    `Colaberry Build Bot` commit rewriting `progress.json`/`manifest.json`
+    and provisioning `docs/`) — if one landed since your last pull, `git
+    push` will be rejected. Resolve by taking the portal's version of
+    `manifest.json` and `progress.json` as the base (`git checkout --theirs`
+    on conflict) and reapplying just your story's criteria/files_touched/
+    notes on top — never force-push over a sync commit.
+13. Push. If the GitHub push webhook is registered (see the portal's
     workspace panel), the portal picks this up within seconds; otherwise the
     user presses "Sync from GitHub."
-12. Update `PROGRESS.md` per this repo's `CLAUDE.md` hard gate — every code
+14. Update `PROGRESS.md` per this repo's `CLAUDE.md` hard gate — every code
     change needs an entry with verification evidence, tagged with the
     session id doing the work.
 

@@ -1,64 +1,798 @@
 {
   "schema_version": 2,
-  "_how_to_use": "Start with every criterion false — that is the correct starting state, not an unfinished one. false means \"not claimed\": either not done, or done but not yet checked. Set one to true only after you have read the code and confirmed it is genuinely true today.",
+  "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 0,
-    "criteria_total": 35,
+    "stories_verified": 6,
+    "stories_submitted": 0,
+    "stories_in_progress": 15,
+    "stories_not_started": 0,
+    "criteria_total": 65,
     "criteria_passed": 20,
-    "points_awarded": 0
+    "points_awarded": 285
   },
   "stories": [
     {
       "id": "STORY-000",
+      "release": null,
+      "acceptance_total": 5,
       "criteria": [
-        { "text": "Given the Command Center, when it is opened, then every tab is reachable and every card drills down one level.", "passed": true },
-        { "text": "Given sample mode, when any tab is shown, then the sample data is visibly labelled as sample.", "passed": true },
-        { "text": "Given the Command Center, when any tab renders, then .colaberry/plan.json and .colaberry/progress.json are both committed in this repo and every tab reads its content from them at runtime rather than from hard-coded values.", "passed": true },
-        { "text": "Given the Command Center, when any tab is shown, then .colaberry/manifest.json is committed in this repo and every tab shows how old that data is and warns when the age exceeds a week.", "passed": true },
-        { "text": "Trust — no tab shows a number, a connection or a result the project has not actually produced.", "passed": true }
+        {
+          "text": "Given the Command Center, when it is opened, then every tab is reachable and every card drills down one level.",
+          "passed": true
+        },
+        {
+          "text": "Given sample mode, when any tab is shown, then the sample data is visibly labelled as sample.",
+          "passed": true
+        },
+        {
+          "text": "Given the Command Center, when any tab renders, then .colaberry/plan.json and .colaberry/progress.json are both committed in this repo and every tab reads its content from them at runtime rather than from hard-coded values.",
+          "passed": true
+        },
+        {
+          "text": "Given the Command Center, when any tab is shown, then .colaberry/manifest.json is committed in this repo and every tab shows how old that data is and warns when the age exceeds a week.",
+          "passed": true
+        },
+        {
+          "text": "Trust — no tab shows a number, a connection or a result the project has not actually produced.",
+          "passed": true
+        }
       ],
-      "verification": { "state": "submitted", "commit": null, "points": 0 }
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "verified",
+        "criteria_passed": 5,
+        "criteria_total": 5,
+        "verified_at": "2026-09-07T02:33:55.211Z",
+        "commit_sha": "8e9e9fe7dabd2a2ac66bd0ba9c5895df96ad0df5",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/8e9e9fe7dabd2a2ac66bd0ba9c5895df96ad0df5",
+        "commit_at": "2026-09-07T02:33:45Z",
+        "points_awarded": 95,
+        "outstanding": []
+      }
     },
-    { "id": "STORY-001", "criteria": [
-      { "text": "Given a new company setup request, when I enter company details, then the system creates a company profile.", "passed": true },
-      { "text": "Given an incomplete company setup request, when I try to save, then the system prompts for missing information.", "passed": true },
-      { "text": "Trust: All company setup actions are logged in the audit trail.", "passed": true }
-    ], "verification": { "state": "submitted", "commit": "5090306", "points": 0 } },
-    { "id": "STORY-002", "criteria": [
-      { "text": "Given a request to add an account, when I provide valid account details, then the system adds it to the chart of accounts.", "passed": true },
-      { "text": "Given a request to add an account with invalid details, when I try to save, then the system rejects the request.", "passed": true },
-      { "text": "Trust: All changes to the chart of accounts are logged in the audit trail.", "passed": true }
-    ], "verification": { "state": "submitted", "commit": "5acc388", "points": 0 } },
-    { "id": "STORY-003", "criteria": [
-      { "text": "Given a journal entry request, when I enter valid debit and credit amounts, then the system records the entry.", "passed": true },
-      { "text": "Given an unbalanced journal entry request, when I try to save, then the system rejects the entry.", "passed": true },
-      { "text": "Trust: All journal entries are logged in the audit trail.", "passed": true }
-    ], "verification": { "state": "submitted", "commit": "0c79a72", "points": 0 } },
-    { "id": "STORY-004", "criteria": [
-      { "text": "Given a valid transaction, when I post it, then the system updates the general ledger.", "passed": true },
-      { "text": "Given an invalid transaction, when I try to post, then the system rejects the posting.", "passed": true },
-      { "text": "Trust: All postings to the general ledger are logged in the audit trail.", "passed": true }
-    ], "verification": { "state": "submitted", "commit": "b454631", "points": 0 } },
-    { "id": "STORY-005", "criteria": [
-      { "text": "Given posted transactions, when I generate a trial balance, then the system displays the balance.", "passed": true },
-      { "text": "Given no transactions, when I generate a trial balance, then the system shows a zero balance.", "passed": true },
-      { "text": "Trust: Trial balance generation is logged in the audit trail.", "passed": true }
-    ], "verification": { "state": "submitted", "commit": "cdc9b5d", "points": 0 } },
-    { "id": "STORY-006", "criteria": [{ "text": "An income statement and balance sheet can be produced.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-018", "criteria": [{ "text": "Unbalanced transactions are rejected before posting.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-019", "criteria": [{ "text": "Every financial transaction is recorded in an audit trail.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-007", "criteria": [{ "text": "Customer and vendor profiles can be created and maintained.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-008", "criteria": [{ "text": "Accounts receivable and payable can be tracked and settled.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-009", "criteria": [{ "text": "Sales and purchasing transactions can be recorded end to end.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-010", "criteria": [{ "text": "Cash and bank transactions can be recorded and reconciled.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-020", "criteria": [{ "text": "Users can be assigned roles that gate what they can access.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-011", "criteria": [{ "text": "Inventory items and stock levels can be tracked.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-012", "criteria": [{ "text": "Budgets and cost centers can be created and tracked.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-013", "criteria": [{ "text": "Branch-level operations can be configured and managed.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-014", "criteria": [{ "text": "Operational and financial dashboards are available.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-015", "criteria": [{ "text": "AI-generated analysis is available and requires approval before altering records.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-016", "criteria": [{ "text": "Multi-branch operations are supported at scale.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } },
-    { "id": "STORY-017", "criteria": [{ "text": "Data can be imported and exported via Excel or CSV.", "passed": false }], "verification": { "state": "not_started", "commit": null, "points": 0 } }
+    {
+      "id": "STORY-001",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a new company setup request, when I enter company details, then the system creates a company profile.",
+          "passed": true
+        },
+        {
+          "text": "Given an incomplete company setup request, when I try to save, then the system prompts for missing information.",
+          "passed": true
+        },
+        {
+          "text": "Trust: All company setup actions are logged in the audit trail.",
+          "passed": true
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "verified",
+        "criteria_passed": 3,
+        "criteria_total": 3,
+        "verified_at": "2026-09-07T20:52:14.321Z",
+        "commit_sha": "eaf7dac209edfb66c547929275fccdb805fe9845",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/eaf7dac209edfb66c547929275fccdb805fe9845",
+        "commit_at": "2026-09-07T16:04:07Z",
+        "points_awarded": 38,
+        "outstanding": []
+      }
+    },
+    {
+      "id": "STORY-002",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a request to add an account, when I provide valid account details, then the system adds it to the chart of accounts.",
+          "passed": true
+        },
+        {
+          "text": "Given a request to add an account with invalid details, when I try to save, then the system rejects the request.",
+          "passed": true
+        },
+        {
+          "text": "Trust: All changes to the chart of accounts are logged in the audit trail.",
+          "passed": true
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "verified",
+        "criteria_passed": 3,
+        "criteria_total": 3,
+        "verified_at": "2026-09-07T22:54:14.331Z",
+        "commit_sha": "5acc388dcece671f317f5086471cb4b45f664490",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/5acc388dcece671f317f5086471cb4b45f664490",
+        "commit_at": "2026-09-07T22:53:20Z",
+        "points_awarded": 38,
+        "outstanding": []
+      }
+    },
+    {
+      "id": "STORY-003",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a journal entry request, when I enter valid debit and credit amounts, then the system records the entry.",
+          "passed": true
+        },
+        {
+          "text": "Given an unbalanced journal entry request, when I try to save, then the system rejects the entry.",
+          "passed": true
+        },
+        {
+          "text": "Trust: All journal entries are logged in the audit trail.",
+          "passed": true
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "verified",
+        "criteria_passed": 3,
+        "criteria_total": 3,
+        "verified_at": "2026-09-08T00:13:52.178Z",
+        "commit_sha": "0c79a72714a518331e922903fe66a020d8cb443f",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/0c79a72714a518331e922903fe66a020d8cb443f",
+        "commit_at": "2026-09-08T00:12:58Z",
+        "points_awarded": 38,
+        "outstanding": []
+      }
+    },
+    {
+      "id": "STORY-004",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a valid transaction, when I post it, then the system updates the general ledger.",
+          "passed": true
+        },
+        {
+          "text": "Given an invalid transaction, when I try to post, then the system rejects the posting.",
+          "passed": true
+        },
+        {
+          "text": "Trust: All postings to the general ledger are logged in the audit trail.",
+          "passed": true
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "verified",
+        "criteria_passed": 3,
+        "criteria_total": 3,
+        "verified_at": "2026-09-08T02:07:18.066Z",
+        "commit_sha": "b4546312ab1f47554e45c6ac424e333ee14d954d",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/b4546312ab1f47554e45c6ac424e333ee14d954d",
+        "commit_at": "2026-09-08T02:06:26Z",
+        "points_awarded": 38,
+        "outstanding": []
+      }
+    },
+    {
+      "id": "STORY-005",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given posted transactions, when I generate a trial balance, then the system displays the balance.",
+          "passed": true
+        },
+        {
+          "text": "Given no transactions, when I generate a trial balance, then the system shows a zero balance.",
+          "passed": true
+        },
+        {
+          "text": "Trust: Trial balance generation is logged in the audit trail.",
+          "passed": true
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "verified",
+        "criteria_passed": 3,
+        "criteria_total": 3,
+        "verified_at": "2026-09-08T04:16:38.390Z",
+        "commit_sha": "cdc9b5d5aa0d0c76f94a02235e0304bda4e40d4b",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/cdc9b5d5aa0d0c76f94a02235e0304bda4e40d4b",
+        "commit_at": "2026-09-08T04:15:40Z",
+        "points_awarded": 38,
+        "outstanding": []
+      }
+    },
+    {
+      "id": "STORY-006",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a request for financial statements, when I generate them, then the system produces an income statement and balance sheet.",
+          "passed": false
+        },
+        {
+          "text": "Given incomplete data, when I try to generate financial statements, then the system alerts me to missing information.",
+          "passed": false
+        },
+        {
+          "text": "Trust: Financial statement generation is logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a request for financial statements, when I generate them, then the system produces an income statement and balance sheet.",
+          "Given incomplete data, when I try to generate financial statements, then the system alerts me to missing information.",
+          "Trust: Financial statement generation is logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-007",
+      "release": "r1",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a new customer profile request, when I enter valid details, then the system saves the profile.",
+          "passed": false
+        },
+        {
+          "text": "Given an invalid customer profile request, when I try to save, then the system rejects the request.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All changes to customer and vendor profiles are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a new customer profile request, when I enter valid details, then the system saves the profile.",
+          "Given an invalid customer profile request, when I try to save, then the system rejects the request.",
+          "Trust: All changes to customer and vendor profiles are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-008",
+      "release": "r1",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given an invoice, when I mark it as paid, then the system updates accounts receivable.",
+          "passed": false
+        },
+        {
+          "text": "Given a payment error, when I try to process, then the system alerts me to the issue.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All accounts receivable and payable transactions are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given an invoice, when I mark it as paid, then the system updates accounts receivable.",
+          "Given a payment error, when I try to process, then the system alerts me to the issue.",
+          "Trust: All accounts receivable and payable transactions are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-009",
+      "release": "r1",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a sales order, when I process it, then the system updates inventory and sales records.",
+          "passed": false
+        },
+        {
+          "text": "Given an invalid sales order, when I try to process, then the system rejects the order.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All sales and purchasing transactions are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a sales order, when I process it, then the system updates inventory and sales records.",
+          "Given an invalid sales order, when I try to process, then the system rejects the order.",
+          "Trust: All sales and purchasing transactions are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-010",
+      "release": "r1",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a bank transaction, when I reconcile it, then the system updates cash records.",
+          "passed": false
+        },
+        {
+          "text": "Given a reconciliation error, when I try to process, then the system alerts me to the issue.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All cash and bank transactions are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a bank transaction, when I reconcile it, then the system updates cash records.",
+          "Given a reconciliation error, when I try to process, then the system alerts me to the issue.",
+          "Trust: All cash and bank transactions are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-011",
+      "release": "r2",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a stock update, when I enter valid details, then the system updates inventory records.",
+          "passed": false
+        },
+        {
+          "text": "Given an invalid stock update, when I try to save, then the system rejects the update.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All inventory changes are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a stock update, when I enter valid details, then the system updates inventory records.",
+          "Given an invalid stock update, when I try to save, then the system rejects the update.",
+          "Trust: All inventory changes are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-012",
+      "release": "r2",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a budget allocation, when I enter valid details, then the system saves the budget.",
+          "passed": false
+        },
+        {
+          "text": "Given an invalid budget allocation, when I try to save, then the system rejects the allocation.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All budget and cost center changes are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a budget allocation, when I enter valid details, then the system saves the budget.",
+          "Given an invalid budget allocation, when I try to save, then the system rejects the allocation.",
+          "Trust: All budget and cost center changes are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-013",
+      "release": "r2",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a branch update, when I enter valid details, then the system updates branch records.",
+          "passed": false
+        },
+        {
+          "text": "Given an invalid branch update, when I try to save, then the system rejects the update.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All branch changes are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a branch update, when I enter valid details, then the system updates branch records.",
+          "Given an invalid branch update, when I try to save, then the system rejects the update.",
+          "Trust: All branch changes are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-014",
+      "release": "r3",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a dashboard request, when I configure it, then the system displays the dashboard with real-time data.",
+          "passed": false
+        },
+        {
+          "text": "Given a reporting error, when I try to generate a report, then the system alerts me to the issue.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All dashboard configurations and report generations are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a dashboard request, when I configure it, then the system displays the dashboard with real-time data.",
+          "Given a reporting error, when I try to generate a report, then the system alerts me to the issue.",
+          "Trust: All dashboard configurations and report generations are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-015",
+      "release": "r3",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a financial query, when I request AI analysis, then the system provides insights without altering records.",
+          "passed": false
+        },
+        {
+          "text": "Given an AI analysis error, when I try to generate insights, then the system alerts me to the issue.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All AI analysis requests are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a financial query, when I request AI analysis, then the system provides insights without altering records.",
+          "Given an AI analysis error, when I try to generate insights, then the system alerts me to the issue.",
+          "Trust: All AI analysis requests are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-016",
+      "release": "r4",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a multi-branch setup request, when I configure branches, then the system supports multi-branch operations.",
+          "passed": false
+        },
+        {
+          "text": "Given an invalid branch configuration, when I try to save, then the system rejects the configuration.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All multi-branch configurations are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a multi-branch setup request, when I configure branches, then the system supports multi-branch operations.",
+          "Given an invalid branch configuration, when I try to save, then the system rejects the configuration.",
+          "Trust: All multi-branch configurations are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-017",
+      "release": "r4",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a data import request, when I upload a valid file, then the system imports the data successfully.",
+          "passed": false
+        },
+        {
+          "text": "Given an invalid data file, when I try to import, then the system rejects the file and alerts me.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All data import and export actions are logged in the audit trail.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a data import request, when I upload a valid file, then the system imports the data successfully.",
+          "Given an invalid data file, when I try to import, then the system rejects the file and alerts me.",
+          "Trust: All data import and export actions are logged in the audit trail."
+        ]
+      }
+    },
+    {
+      "id": "STORY-018",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a transaction with balanced debit and credit entries, when I post the transaction, then it should be accepted.",
+          "passed": false
+        },
+        {
+          "text": "Given a transaction with unbalanced debit and credit entries, when I attempt to post the transaction, then it should be rejected with an error message.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All transaction attempts must be logged with their success or failure status.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a transaction with balanced debit and credit entries, when I post the transaction, then it should be accepted.",
+          "Given a transaction with unbalanced debit and credit entries, when I attempt to post the transaction, then it should be rejected with an error message.",
+          "Trust: All transaction attempts must be logged with their success or failure status."
+        ]
+      }
+    },
+    {
+      "id": "STORY-019",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a posted transaction, when I view the audit trail, then it should display the transaction details and status.",
+          "passed": false
+        },
+        {
+          "text": "Given a failed transaction attempt, when I view the audit trail, then it should display the attempt details and failure reason.",
+          "passed": false
+        },
+        {
+          "text": "Trust: The audit trail must record every transaction attempt with a timestamp and user ID.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a posted transaction, when I view the audit trail, then it should display the transaction details and status.",
+          "Given a failed transaction attempt, when I view the audit trail, then it should display the attempt details and failure reason.",
+          "Trust: The audit trail must record every transaction attempt with a timestamp and user ID."
+        ]
+      }
+    },
+    {
+      "id": "STORY-020",
+      "release": "r1",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a new user role, when I assign permissions, then the user should only access allowed features.",
+          "passed": false
+        },
+        {
+          "text": "Given a user with no permissions, when they attempt to access a feature, then access should be denied.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All changes to user roles and permissions must be logged with the admin's user ID.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a new user role, when I assign permissions, then the user should only access allowed features.",
+          "Given a user with no permissions, when they attempt to access a feature, then access should be denied.",
+          "Trust: All changes to user roles and permissions must be logged with the admin's user ID."
+        ]
+      }
+    }
   ]
 }

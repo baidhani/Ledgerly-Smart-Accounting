@@ -3,13 +3,13 @@
   "project": "Intelligent Accounting and Business Management System",
   "totals": {
     "stories_total": 21,
-    "stories_verified": 15,
+    "stories_verified": 16,
     "stories_submitted": 0,
-    "stories_in_progress": 6,
+    "stories_in_progress": 5,
     "stories_not_started": 0,
     "criteria_total": 65,
-    "criteria_passed": 47,
-    "points_awarded": 627
+    "criteria_passed": 50,
+    "points_awarded": 665
   },
   "stories": [
     {
@@ -151,7 +151,7 @@
         "verified_at": "2026-09-08T00:13:52.178Z",
         "commit_sha": "0c79a72714a518331e922903fe66a020d8cb443f",
         "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/0c79a72714a518331e922903fe66a020d8cb443f",
-        "commit_at": "2026-09-08T00:12:58Z",
+        "commit_at": "2026-09-08T00:14:12Z",
         "points_awarded": 38,
         "outstanding": []
       }
@@ -507,19 +507,15 @@
       "notes": "cost_centers and budgets tables; a budget allocation ties a cost center to a chart-of-accounts account for a period, with (cost_center_id, account_id, period) as the natural key for duplicate detection. Pure planning/tracking record - no journal entries, no variance reporting (reserved for STORY-014). Verified live via HTTP against a running server plus direct SQLite queries, in addition to the automated test suite. Commit f4ba48d.",
       "updated_at": "2026-09-08T16:50:00Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a budget allocation, when I enter valid details, then the system saves the budget.",
-          "Given an invalid budget allocation, when I try to save, then the system rejects the allocation.",
-          "Trust: All budget and cost center changes are logged in the audit trail."
-        ]
+        "verified_at": "2026-09-08T16:54:03.930Z",
+        "commit_sha": "f4ba48dbe1d79bd7d991c9fc5a03b29788b65896",
+        "commit_url": "https://github.com/baidhani/Ledgerly-Smart-Accounting/commit/f4ba48dbe1d79bd7d991c9fc5a03b29788b65896",
+        "commit_at": "2026-09-08T16:53:16Z",
+        "points_awarded": 38,
+        "outstanding": []
       }
     },
     {
